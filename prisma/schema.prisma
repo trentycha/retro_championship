@@ -1,0 +1,168 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+}
+
+model UserStatus {
+  id    Int    @id @default(autoincrement()) @map("Id_user_status")
+  label String @db.VarChar(50)
+  users User[]
+
+  @@map("user_status")
+}
+
+model MatchStatus {
+  id      Int      @id @default(autoincrement()) @map("Id_match_status")
+  label   String   @db.VarChar(150)
+  matches Match[]
+
+  @@map("match_status")
+}
+
+model Channel {
+  id      Int      @id @default(autoincrement()) @map("Id_channel")
+  label   String   @db.VarChar(100)
+  matches Match[]
+
+  @@map("channel")
+}
+
+model TournamentStatus {
+  id          Int          @id @default(autoincrement()) @map("Id_tournament_status")
+  label       String       @db.VarChar(50)
+  tournaments Tournament[]
+
+  @@map("tournament_status")
+}
+
+model TypeGame {
+  id    Int    @id @default(autoincrement()) @map("Id_type_game")
+  name  String @db.VarChar(50)
+  games Game[]
+
+  @@map("type_game")
+}
+
+model License {
+  id    Int    @id @default(autoincrement()) @map("Id_license")
+  name  String @db.VarChar(100)
+  games Game[]
+
+  @@map("license")
+}
+
+model Game {
+  id          Int          @id @default(autoincrement()) @map("Id_game")
+  name        String?      @db.VarChar(100)
+  licenseId   Int          @map("Id_license")
+  typeGameId  Int          @map("Id_type_game")
+  
+  license     License      @relation(fields: [licenseId], references: [id])
+  typeGame    TypeGame     @relation(fields: [typeGameId], references: [id])
+  tournaments Tournament[]
+
+  @@map("game")
+}
+
+model User {
+  id              Int          @id @default(autoincrement()) @map("Id_user")
+  mail            String       @unique @db.VarChar(150)
+  password        String       @db.VarChar(150)
+  username        String       @unique @db.VarChar(100)
+  birthday        DateTime     @db.Date
+  city            String       @db.VarChar(100)
+  createdAt       DateTime     @map("created_at") @db.DateTime(0)
+  howManyTourn    Int?         @map("how_many_tourn")
+  howManyMatches  Int?         @map("how_many_matches")
+  wonTournaments  Int?         @map("won_tournaments")
+  userStatusId    Int          @map("Id_user_status")
+  
+  userStatus             UserStatus    @relation(fields: [userStatusId], references: [id])
+  prizes                 Prize[]
+  createdTournaments     Tournament[]  @relation("TournamentCreator")
+  wonTournamentsRel      Tournament[]  @relation("TournamentWinner")
+  matches                Match[]       @relation("MatchCreator")
+  matchesAsPlayer1       Match[]       @relation("MatchPlayer1")
+  matchesAsPlayer2       Match[]       @relation("MatchPlayer2")
+  subscriptions          Sub[]
+
+  @@map("user_")
+}
+
+model Prize {
+  id          Int          @id @default(autoincrement()) @map("Id_prize")
+  name        String       @db.VarChar(50)
+  description String       @db.Text
+  value       Decimal?     @map("value_") @db.Decimal(15, 2)
+  userId      Int          @map("Id_user")
+  
+  user        User         @relation(fields: [userId], references: [id])
+  tournaments Tournament[]
+
+  @@map("prize")
+}
+
+model Tournament {
+  id                 Int              @id @default(autoincrement()) @map("Id_tournament")
+  name               String           @db.VarChar(150)
+  startedAt          DateTime?        @map("started_at") @db.DateTime(0)
+  endedAt            DateTime?        @map("ended_at") @db.DateTime(0)
+  creatorId          Int              @map("Id_user")
+  winnerId           Int              @map("Id_user_1")
+  prizeId            Int              @map("Id_prize")
+  gameId             Int              @map("Id_game")
+  tournamentStatusId Int              @map("Id_tournament_status")
+  
+  creator            User             @relation("TournamentCreator", fields: [creatorId], references: [id])
+  winner             User             @relation("TournamentWinner", fields: [winnerId], references: [id])
+  prize              Prize            @relation(fields: [prizeId], references: [id])
+  game               Game             @relation(fields: [gameId], references: [id])
+  tournamentStatus   TournamentStatus @relation(fields: [tournamentStatusId], references: [id])
+  matches            Match[]
+  subscriptions      Sub[]
+
+  @@map("tournament")
+}
+
+model Match {
+  id            Int           @id @default(autoincrement()) @map("Id_match")
+  startedAt     DateTime      @map("started_at") @db.DateTime(0)
+  endedAt       DateTime?     @map("ended_at") @db.DateTime(0)
+  tournamentId  Int?          @map("Id_tournament")
+  creatorId     Int?          @map("Id_user")
+  channelId     Int?          @map("Id_channel")
+  player1Id     Int?          @map("Id_user_1")
+  player2Id     Int?          @map("Id_user_2")
+  matchStatusId Int?          @map("Id_match_status")
+  
+  tournament    Tournament?   @relation(fields: [tournamentId], references: [id])
+  creator       User?         @relation("MatchCreator", fields: [creatorId], references: [id])
+  channel       Channel?      @relation(fields: [channelId], references: [id])
+  player1       User?         @relation("MatchPlayer1", fields: [player1Id], references: [id])
+  player2       User?         @relation("MatchPlayer2", fields: [player2Id], references: [id])
+  matchStatus   MatchStatus?  @relation(fields: [matchStatusId], references: [id])
+
+  @@map("match_")
+}
+
+model Sub {
+  userId       Int        @map("Id_user")
+  tournamentId Int        @map("Id_tournament")
+  
+  user         User       @relation(fields: [userId], references: [id])
+  tournament   Tournament @relation(fields: [tournamentId], references: [id])
+
+  @@id([userId, tournamentId])
+  @@map("sub")
+}
