@@ -16,7 +16,7 @@ datasource db {
 
 model UserStatus {
   id    Int    @id @default(autoincrement()) @map("Id_user_status")
-  label String @db.VarChar(50)
+  label String @unique @db.VarChar(50)
   users User[]
 
   @@map("user_status")
@@ -92,7 +92,7 @@ model User {
   prizes                 Prize[]
   createdTournaments     Tournament[]  @relation("TournamentCreator")
   wonTournamentsRel      Tournament[]  @relation("TournamentWinner")
-  matches                Match[]       @relation("MatchCreator")
+  wonMatches             Match[]       @relation("MatchWinner")
   matchesAsPlayer1       Match[]       @relation("MatchPlayer1")
   matchesAsPlayer2       Match[]       @relation("MatchPlayer2")
   subscriptions          Sub[]
@@ -115,19 +115,19 @@ model Prize {
 
 model Tournament {
   id                 Int              @id @default(autoincrement()) @map("Id_tournament")
-  name               String           @db.VarChar(150)
-  startedAt          DateTime?        @map("started_at") @db.DateTime(0)
-  endedAt            DateTime?        @map("ended_at") @db.DateTime(0)
+  name               String           @unique @db.VarChar(150)
+  startedAt          DateTime?        @unique @map("started_at") @db.DateTime(0)
+  endedAt            DateTime?        @unique @map("ended_at") @db.DateTime(0)
   creatorId          Int              @map("Id_user")
-  winnerId           Int              @map("Id_user_1")
-  prizeId            Int              @map("Id_prize")
-  gameId             Int              @map("Id_game")
+  winnerId           Int?             @map("Id_user_1")
+  prizeId            Int?             @map("Id_prize")
+  gameId             Int?             @map("Id_game")
   tournamentStatusId Int              @map("Id_tournament_status")
   
   creator            User             @relation("TournamentCreator", fields: [creatorId], references: [id])
-  winner             User             @relation("TournamentWinner", fields: [winnerId], references: [id])
-  prize              Prize            @relation(fields: [prizeId], references: [id])
-  game               Game             @relation(fields: [gameId], references: [id])
+  winner             User?            @relation("TournamentWinner", fields: [winnerId], references: [id])
+  prize              Prize?           @relation(fields: [prizeId], references: [id])
+  game               Game?            @relation(fields: [gameId], references: [id])
   tournamentStatus   TournamentStatus @relation(fields: [tournamentStatusId], references: [id])
   matches            Match[]
   subscriptions      Sub[]
@@ -140,14 +140,14 @@ model Match {
   startedAt     DateTime      @map("started_at") @db.DateTime(0)
   endedAt       DateTime?     @map("ended_at") @db.DateTime(0)
   tournamentId  Int?          @map("Id_tournament")
-  creatorId     Int?          @map("Id_user")
+  winnerId      Int?          @map("Id_user_winner")
   channelId     Int?          @map("Id_channel")
   player1Id     Int?          @map("Id_user_1")
   player2Id     Int?          @map("Id_user_2")
   matchStatusId Int?          @map("Id_match_status")
   
   tournament    Tournament?   @relation(fields: [tournamentId], references: [id])
-  creator       User?         @relation("MatchCreator", fields: [creatorId], references: [id])
+  winner        User?         @relation("MatchWinner", fields: [winnerId], references: [id])
   channel       Channel?      @relation(fields: [channelId], references: [id])
   player1       User?         @relation("MatchPlayer1", fields: [player1Id], references: [id])
   player2       User?         @relation("MatchPlayer2", fields: [player2Id], references: [id])
