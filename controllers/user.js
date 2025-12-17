@@ -131,3 +131,71 @@ exports.getUserStatus = async (req, res, next) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.getUserMatches = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const matches = await prisma.match.findMany({
+            where: {
+                OR: [
+                    {player1Id: parseInt(id)},
+                    {player2Id: parseInt(id)},
+                ],
+            },
+            include: {
+                player1: {
+                    select: { id: true, username: true },
+                },
+                player2: {
+                    select: { id: true, username: true },
+                },
+                winner: {
+                    select: { id: true, username: true },
+                },
+                tournament: {
+                    select: { id: true, name: true },
+                },
+            },
+        });
+
+        res.json(matches);
+    } catch (error) {
+        res.status(500).json({ userMatches: error.message });
+    }
+};
+
+exports.getUserTournaments = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const tournaments = await prisma.sub.findMany({
+            where: {
+                    userId: parseInt(id),
+            },
+            include: {
+                tournament: {
+                    select: {
+                        name: true,
+                        startedAt: true,
+                        endedAt: true,
+                        game: {
+                            select: { id: true, name: true },
+                        },
+                        winner: {
+                            select: { id: true, username: true },
+                        },
+                        prize: {
+                            select: { id: true, name: true, value: true },
+                        },
+                        tournamentStatus: {
+                            select: { id: true, label: true },
+                        },
+                    },
+                },
+            },
+        });
+
+        res.json(tournaments);
+    } catch (error) {
+        res.status(500).json({ useTournaments: error.message });
+    }
+};
