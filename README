@@ -1,0 +1,45 @@
+# To-Do List du Projet
+
+| Étape | Tâche | Statut |
+|-------|-------|--------|
+| **1. Lancement du projet** | | |
+| | Lancement du projet : création de la base de données (entités, relations, …) en MySQL | ✅ Terminé |
+| | Création des endpoints | ✅ Terminé |
+| **2. Configuration initiale** | | |
+| | Créer et initialiser le projet | ✅ Terminé |
+| | Installation de Prisma | ✅ Terminé |
+| | Création du schéma et première migration de la base de données | ✅ Terminé |
+| | Mise en place de l'architecture des routes | ✅ Terminé |
+| | Tests de routes avec Postman | ✅ Terminé |
+| **3. Routes Utilisateurs** | | |
+| | Création des routes Utilisateurs : middlewares, routes et controller | ✅ Terminé |
+| | Tests des routes Utilisateurs sur Postman | ✅ Terminé |
+| | Gestion des autorisations : cryptage de mot de passe, tokens et routes | ✅ Terminé |
+| | Gestion des autorisations de rôles : spectateur, joueur, admin | A faire |
+| **4. Routes Tournois** | | |
+| | Création des routes Tournois : middlewares, routes et controller | ✅ Terminé |
+| | Tests des routes Tournois sur Postman | ✅ Terminé |
+| **5. Routes Matchs** | | |
+| | Création des routes Matchs : middlewares, routes et controller | ✅ Terminé |
+| | Tests des routes Matchs sur Postman | ✅ Terminé |
+| **6. Routes Prix** | | |
+| | Création des routes Prix : middlewares, routes et controller | ✅ Terminé |
+| | Tests des routes Prix sur Postman | ✅ Terminé |
+| **7. Routes Chaînes** | | |
+| | Création des routes Chaînes : middlewares, routes et controller | ✅ Terminé |
+| | Tests des routes Chaînes sur Postman | ✅ Terminé |
+| **8. Routes Jeux** | | |
+| | Création des routes Jeux : middlewares, routes et controller | ✅ Terminé |
+| | Tests des routes Jeux sur Postman | ✅ Terminé |
+| **9. Documentation Swagger** | | |
+| | Tests des routes avec Swagger | ✅ Terminé |
+| | Installation du package Swagger | À faire |
+| **10. Tests automatisés** | | |
+| | Tests unitaires avec Jest | À faire |
+| | Tests d'intégration des routes | À faire |
+| **11. Déploiement** | | |
+| | Configuration pour la production | À faire |
+| | CI/CD avec GitHub Actions | À faire |
+| | Documentation de déploiement | À faire |
+
+---

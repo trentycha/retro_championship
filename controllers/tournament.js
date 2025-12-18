@@ -1,5 +1,15 @@
 const { prisma } = require('../lib/prisma');
 
+exports.getAllTournaments = async (req, res, next) => {
+
+            try {
+                const user = await prisma.tournament.findMany();
+                res.status(200).json(user);
+            } catch (error) {
+                res.status(400).json( {error : error.message});
+            }
+};
+
 exports.getTournamentById = async (req, res, next) => {
 
             try {
@@ -96,7 +106,7 @@ exports.updateTournament = async (req, res, next) => {
                 tournamentStatusId: statusUpdate.id,
             },
         });
-        res.status(201).json(updateTournament)
+        res.status(200).json(updateTournament)
     } catch (error) {
         res.status(400).json( {error : error.message});
     }
@@ -114,5 +124,46 @@ exports.deleteTournament = async (req, res, next) => {
 
     } catch (error) {
         res.status(400).json({ error: error.message });
+    }
+};
+
+exports.getAllUsersFromOneTournament = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const subscriptions = await prisma.sub.findMany({
+            where: {
+                tournamentId: parseInt(id),
+            },
+            include: {
+                user: {
+                    select: { username: true, mail: true },
+                },
+            },
+        });
+
+        res.json(subscriptions);
+    } catch (error) {
+        res.status(500).json({ usersFromTournament: error.message });
+    }
+};
+
+exports.getWinnerFromOneTournament = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const winnerTournament = await prisma.tournament.findUnique({
+            where: {
+                id: parseInt(id),
+            },
+            select: {
+                winner: {
+                    select: { username: true, mail: true },
+                },
+            },
+        });
+
+        res.json(winnerTournament);
+    } catch (error) {
+        res.status(500).json({ winnerTournament: error.message });
     }
 };

@@ -1,4 +1,7 @@
+require('dotenv').config();
 const { prisma } = require('../lib/prisma');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.getUserById = async (req, res, next) => {
 
@@ -16,6 +19,9 @@ exports.signup = async (req, res, next) => {
 
     try {
         const { mail, password, username, birthday, city, userStatus } = req.body;
+
+        const salt = await bcrypt.genSalt(10)
+        const crypted_password = await bcrypt.hash(req.body.password, salt)
 
         const verifMail = await prisma.user.findUnique({
             where: {mail},
@@ -41,7 +47,7 @@ exports.signup = async (req, res, next) => {
         const newUser = await prisma.user.create({
             data: {
             mail,
-            password,
+            password: crypted_password,
             username,
             birthday: new Date(birthday),
             city,
@@ -52,7 +58,18 @@ exports.signup = async (req, res, next) => {
             wonTournaments: 0,
             },
         })
-        res.status(201).json(newUser)
+
+        const access_token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+        res.status(201).json({
+            message: "Utilisateur crée !",
+            id: newUser.id,
+            mail: newUser.mail,
+            username: newUser.username,
+            birthday: newUser.birthday,
+            city: newUser.city,
+            userStatusId: status.id,
+            token: access_token
+        })
     } catch (error) {
         res.status(400).json( {error : error.message});
     }
@@ -71,7 +88,17 @@ exports.login = async (req, res, next) => {
             return res.status(400).json( {error : error.message});
         }
 
-        res.status(200).json(user)
+        const ok = await bcrypt.compare(password, user.password);
+        if (!ok) {
+            return res.status(401).json({ error: 'Mot de passe incorrect!' });
+        }
+
+        const access_token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+
+        res.status(200).json({
+            mail: user.mail,
+            token: access_token
+        })
     } catch (error) {
         res.status(400).json( {error : error.message});
     }
