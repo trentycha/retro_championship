@@ -16,6 +16,7 @@
 | | Tests des routes Utilisateurs sur Postman | ✅ Terminé |
 | | Gestion des autorisations : cryptage de mot de passe, tokens et routes | ✅ Terminé |
 | | Gestion des autorisations de rôles : spectateur, joueur, admin | A faire |
+| | Incrémenter les statistiques à chaque participation de tournoi, match et tournoi gagné | A faire |
 | **4. Routes Tournois** | | |
 | | Création des routes Tournois : middlewares, routes et controller | ✅ Terminé |
 | | Tests des routes Tournois sur Postman | ✅ Terminé |
@@ -33,11 +34,15 @@
 | | Tests des routes Jeux sur Postman | ✅ Terminé |
 | **9. Documentation Swagger** | | |
 | | Tests des routes avec Swagger | ✅ Terminé |
-| | Installation du package Swagger | À faire |
-| **10. Tests automatisés** | | |
+| | Installation du package Swagger | ✅ Terminé |
+  **10. Ajout de la gestion de document** | | |
+| | Configurer Multer | A faire |
+  **11. Renforcer la sécurité** | | |
+| | Installer des packages pour renforcer la sécurité | À faire |
+| **12. Tests automatisés** | | |
 | | Tests unitaires avec Jest | À faire |
 | | Tests d'intégration des routes | À faire |
-| **11. Déploiement** | | |
+| **13. Déploiement** | | |
 | | Configuration pour la production | À faire |
 | | CI/CD avec GitHub Actions | À faire |
 | | Documentation de déploiement | À faire |

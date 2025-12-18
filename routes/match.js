@@ -4,8 +4,6 @@ const matchController = require("../controllers/match.js");
 const auth = require('../middlewares/auth');
 
 router.get("/:id", matchController.getMatchById);
-// router.get("/:id/users", matchController.getAllUsersFromOneMatch);
-// router.get("/:id/winner", matchController.getWinnerFromOneMatch);
 
 router.post("/", auth, matchController.createMatch);
 

@@ -107,7 +107,7 @@ model Prize {
   value       Decimal?     @map("value_") @db.Decimal(15, 2)
   userId      Int          @map("Id_user")
   
-  user        User         @relation(fields: [userId], references: [id])
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   tournaments Tournament[]
 
   @@map("prize")
@@ -124,8 +124,8 @@ model Tournament {
   gameId             Int?             @map("Id_game")
   tournamentStatusId Int              @map("Id_tournament_status")
   
-  creator            User             @relation("TournamentCreator", fields: [creatorId], references: [id])
-  winner             User?            @relation("TournamentWinner", fields: [winnerId], references: [id])
+  creator            User             @relation("TournamentCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  winner             User?            @relation("TournamentWinner", fields: [winnerId], references: [id], onDelete: Cascade)
   prize              Prize?           @relation(fields: [prizeId], references: [id])
   game               Game?            @relation(fields: [gameId], references: [id])
   tournamentStatus   TournamentStatus @relation(fields: [tournamentStatusId], references: [id])
@@ -147,10 +147,10 @@ model Match {
   matchStatusId Int?          @map("Id_match_status")
   
   tournament    Tournament?   @relation(fields: [tournamentId], references: [id])
-  winner        User?         @relation("MatchWinner", fields: [winnerId], references: [id])
+  winner        User?         @relation("MatchWinner", fields: [winnerId], references: [id], onDelete: Cascade)
   channel       Channel?      @relation(fields: [channelId], references: [id])
-  player1       User?         @relation("MatchPlayer1", fields: [player1Id], references: [id])
-  player2       User?         @relation("MatchPlayer2", fields: [player2Id], references: [id])
+  player1       User?         @relation("MatchPlayer1", fields: [player1Id], references: [id], onDelete: Cascade)
+  player2       User?         @relation("MatchPlayer2", fields: [player2Id], references: [id], onDelete: Cascade)
   matchStatus   MatchStatus?  @relation(fields: [matchStatusId], references: [id])
 
   @@map("match_")
@@ -160,7 +160,7 @@ model Sub {
   userId       Int        @map("Id_user")
   tournamentId Int        @map("Id_tournament")
   
-  user         User       @relation(fields: [userId], references: [id])
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   tournament   Tournament @relation(fields: [tournamentId], references: [id])
 
   @@id([userId, tournamentId])

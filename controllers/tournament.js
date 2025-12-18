@@ -127,6 +127,39 @@ exports.deleteTournament = async (req, res, next) => {
     }
 };
 
+exports.getAllMatchesFromOneTournament = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const matches = await prisma.match.findMany({
+            where: {
+                tournamentId: parseInt(id),
+            },
+            include: {
+                player1: {
+                    select: { username: true, mail: true },
+                },
+                player2: {
+                    select: { username: true, mail: true },
+                },
+                winner: {
+                    select: { username: true },
+                },
+                channel: {
+                    select: { label: true },
+                },
+                matchStatus: {
+                    select: { label: true },
+                },
+            },
+        });
+
+        res.json(matches);
+    } catch (error) {
+        res.status(500).json({ usersFromTournament: error.message });
+    }
+};
+
 exports.getAllUsersFromOneTournament = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -165,5 +198,84 @@ exports.getWinnerFromOneTournament = async (req, res, next) => {
         res.json(winnerTournament);
     } catch (error) {
         res.status(500).json({ winnerTournament: error.message });
+    }
+};
+
+exports.subscribeToTournament = async (req, res, next) => {
+
+    try {
+        const { id } = req.params;
+        const { username } = req.body;
+
+        const user = await prisma.user.findUnique({
+            where: { username: username },
+        });
+        if (!user) {
+            return res.status(404).json({ error: 'Utilisateur non trouvé' });
+        }
+
+        const sub = await prisma.sub.findUnique({
+            where: {
+                userId_tournamentId: {
+                    userId: user.id,
+                    tournamentId: parseInt(id),
+                },
+            },
+        });
+        if (sub) {
+            return res.status(409).json({ error: 'L\'utilisateur est déjà inscrit' });
+        }
+
+        const subscription = await prisma.sub.create({
+            data: {
+                userId: user.id,
+                tournamentId: parseInt(id),
+            },
+        });
+
+        res.status(201).json(subscription);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+exports.unsubscribeFromTournament = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { username } = req.body;
+
+        const user = await prisma.user.findUnique({
+            where: { username: username },
+        });
+        if (!user) {
+            return res.status(404).json({ error: 'Utilisateur non trouvé' });
+        }
+
+        const sub = await prisma.sub.findUnique({
+            where: {
+                userId_tournamentId: {
+                    userId: user.id,
+                    tournamentId: parseInt(id),
+                },
+            },
+        });
+        if (!sub) {
+            return res.status(404).json({ error: 'L\'utilisateur n\'est pas inscrit à ce tournoi' });
+        }
+
+        const unsubscribe = await prisma.sub.delete({
+            where: {
+                userId_tournamentId: {
+                    userId: user.id,
+                    tournamentId: parseInt(id),
+                },
+            },
+        });
+
+        res.status(200).json({
+           message: 'Inscription supprimée !',
+        });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 };

@@ -37,7 +37,7 @@ exports.signup = async (req, res, next) => {
             return res.status(400).json( {username : error.message});
         }
 
-        const status = await prisma.userStatus.findUnique({
+        const status = await prisma.userStatus.findFirst({
             where: { label: userStatus },
         });
         if (!status) {
@@ -59,7 +59,7 @@ exports.signup = async (req, res, next) => {
             },
         })
 
-        const access_token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+        const access_token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: '6h' });
         res.status(201).json({
             message: "Utilisateur crée !",
             id: newUser.id,
@@ -93,7 +93,7 @@ exports.login = async (req, res, next) => {
             return res.status(401).json({ error: 'Mot de passe incorrect!' });
         }
 
-        const access_token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+        const access_token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '6h' });
 
         res.status(200).json({
             mail: user.mail,
