@@ -12,12 +12,12 @@ const doc = {
   consumes: ['application/json'],
   produces: ['application/json'],
   tags: [
-    { name: 'User', description: 'Gestion des utilisateurs' },
-    { name: 'Tournament', description: 'Gestion des tournois' },
-    { name: 'Match', description: 'Gestion des matchs' },
-    { name: 'Game', description: 'Gestion des jeux' },
-    { name: 'Channel', description: 'Gestion des chaines' },
-    { name: 'Prize', description: 'Gestion des prix' },
+    // { name: 'User', description: 'Gestion des utilisateurs' },
+    // { name: 'Tournament', description: 'Gestion des tournois' },
+    // { name: 'Match', description: 'Gestion des matchs' },
+    // { name: 'Game', description: 'Gestion des jeux' },
+    // { name: 'Channel', description: 'Gestion des chaines' },
+    // { name: 'Prize', description: 'Gestion des prix' },
   ],
   securityDefinitions: {
     bearerAuth: {

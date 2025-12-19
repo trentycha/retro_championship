@@ -96,7 +96,7 @@ exports.deleteGame = async (req, res, next) => {
             where: { id: parseInt(id) },
         });
 
-        res.status(200).json({message: "Jeu supprimé !"});
+        res.status(204).json({message: "Jeu supprimé !"});
 
     } catch (error) {
         res.status(400).json({ error: error.message });

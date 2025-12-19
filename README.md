@@ -34,7 +34,7 @@
 | | Tests des routes Jeux sur Postman | ✅ Terminé |
 | **9. Documentation Swagger** | | |
 | | Tests des routes avec Swagger | ✅ Terminé |
-| | Installation du package Swagger | ✅ Terminé |
+| | Installation du package Swagger | En cours |
   **10. Ajout de la gestion de document** | | |
 | | Configurer Multer | A faire |
   **11. Renforcer la sécurité** | | |

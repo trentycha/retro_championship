@@ -27,21 +27,21 @@ exports.signup = async (req, res, next) => {
             where: {mail},
         });
         if(verifMail) {
-            return res.status(400).json( {mail : error.message});
+            return res.status(400).json( {error : "Un autre compte possède déjà ce mail"});
         }
 
         const verifUsername = await prisma.user.findUnique({
             where: {username},
         });
         if(verifUsername) {
-            return res.status(400).json( {username : error.message});
+            return res.status(400).json( {error : "Un autre compte possède déjà ce pseudo"});
         }
 
         const status = await prisma.userStatus.findFirst({
             where: { label: userStatus },
         });
         if (!status) {
-            return res.status(400).json( {userStatus : "Mauvais statut défini"});
+            return res.status(400).json( {error : "Mauvais statut défini"});
         }
 
         const newUser = await prisma.user.create({
@@ -59,7 +59,7 @@ exports.signup = async (req, res, next) => {
             },
         })
 
-        const access_token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: '6h' });
+        const access_token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: '12h' });
         res.status(201).json({
             message: "Utilisateur crée !",
             id: newUser.id,
@@ -83,17 +83,16 @@ exports.login = async (req, res, next) => {
         const user = await prisma.user.findUnique({
             where: { mail },
         });
-
         if(!user) {
-            return res.status(400).json( {error : error.message});
+            return res.status(400).json( {error : "Utilisateur introuvable."});
         }
 
         const ok = await bcrypt.compare(password, user.password);
         if (!ok) {
-            return res.status(401).json({ error: 'Mot de passe incorrect!' });
+            return res.status(401).json({ error: "Mot de passe incorrect !" });
         }
 
-        const access_token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '6h' });
+        const access_token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '12h' });
 
         res.status(200).json({
             mail: user.mail,
@@ -109,18 +108,21 @@ exports.updateUser = async (req, res, next) => {
         const { id } = req.params;
         const { mail, password, username, birthday, city, userStatus } = req.body;
 
+        const salt = await bcrypt.genSalt(10)
+        const crypted_password = await bcrypt.hash(req.body.password, salt)
+
         const status = await prisma.userStatus.findUnique({
             where: { label: userStatus },
         });
         if (!status) {
-            return res.status(400).json( {userStatus : "Mauvais statut défini"});
+            return res.status(400).json( {error : "Mauvais statut défini"});
         }
 
-        const updatedUser = await prisma.user.update({
+        const updateUser = await prisma.user.update({
             where: { id: parseInt(id) },
             data: {
                 mail,
-                password,
+                password: crypted_password,
                 username,
                 birthday: new Date(birthday),
                 city,
@@ -128,7 +130,17 @@ exports.updateUser = async (req, res, next) => {
             },
         });
 
-        res.status(200).json(updatedUser);
+        const access_token = jwt.sign({ id: updateUser.id }, process.env.JWT_SECRET, { expiresIn: '12h' });
+        res.status(200).json({
+            message: "Utilisateur modifié !",
+            id: updateUser.id,
+            mail: updateUser.mail,
+            username: updateUser.username,
+            birthday: updateUser.birthday,
+            city: updateUser.city,
+            userStatusId: status.id,
+            token: access_token
+        });
 
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -143,7 +155,7 @@ exports.deleteUser = async (req, res, next) => {
             where: { id: parseInt(id) },
         });
 
-        res.status(200).json({message: "Utilisateur supprimé !"});
+        res.status(204).json({message: "Utilisateur supprimé !"});
 
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -155,7 +167,7 @@ exports.getUserStatus = async (req, res, next) => {
         const status = await prisma.userStatus.findUnique();
         res.json(status);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(400).json({ error: error.message });
     }
 };
 
@@ -187,7 +199,7 @@ exports.getUserMatches = async (req, res, next) => {
 
         res.json(matches);
     } catch (error) {
-        res.status(500).json({ userMatches: error.message });
+        res.status(400).json({ userMatches: error.message });
     }
 };
 
@@ -223,6 +235,6 @@ exports.getUserTournaments = async (req, res, next) => {
 
         res.json(tournaments);
     } catch (error) {
-        res.status(500).json({ useTournaments: error.message });
+        res.status(400).json({ useTournaments: error.message });
     }
 };

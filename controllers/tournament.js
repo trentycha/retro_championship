@@ -120,7 +120,7 @@ exports.deleteTournament = async (req, res, next) => {
             where: { id: parseInt(id) },
         });
 
-        res.status(200).json({message: "Tournoi supprimé !"});
+        res.status(204).json({message: "Tournoi supprimé !"});
 
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -272,7 +272,7 @@ exports.unsubscribeFromTournament = async (req, res, next) => {
             },
         });
 
-        res.status(200).json({
+        res.status(204).json({
            message: 'Inscription supprimée !',
         });
     } catch (error) {
