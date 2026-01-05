@@ -1,0 +1,30 @@
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=pw
+      - MYSQL_DATABASE=retro_championship
+    volumes:
+      - mysqldata:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    environment:
+      PMA_HOST: mysql
+    ports:
+      - 8080:80
+
+  app:
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=mysql://root:pw@mysql:3306/retro_championship
+      - DATABASE_HOST=mysql
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=pw
+      - DATABASE_NAME=retro_championship
+      - DATABASE_PORT=3306
+
+volumes:
+  mysqldata:

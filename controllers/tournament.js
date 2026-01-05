@@ -202,18 +202,15 @@ exports.getWinnerFromOneTournament = async (req, res, next) => {
 };
 
 exports.subscribeToTournament = async (req, res, next) => {
-
     try {
         const { id } = req.params;
         const { username } = req.body;
-
         const user = await prisma.user.findUnique({
             where: { username: username },
         });
         if (!user) {
             return res.status(404).json({ error: 'Utilisateur non trouvé' });
         }
-
         const sub = await prisma.sub.findUnique({
             where: {
                 userId_tournamentId: {
