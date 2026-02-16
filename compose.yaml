@@ -11,13 +11,16 @@ services:
     image: phpmyadmin:latest
     environment:
       PMA_HOST: mysql
-    ports:
-      - 8080:80
+    # ports:
+    #   - 8080:80
+    labels:
+    - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.localhost`)"
+    - "traefik.http.services.phpmyadmin.loadbalancer.server.port=80"
 
   app:
     build: .
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
     environment:
       - DATABASE_URL=mysql://root:pw@mysql:3306/retro_championship
       - DATABASE_HOST=mysql
@@ -25,6 +28,25 @@ services:
       - DATABASE_PASSWORD=pw
       - DATABASE_NAME=retro_championship
       - DATABASE_PORT=3306
+    labels:
+    - "traefik.http.routers.app.rule=Host(`app.localhost`)"
+    - "traefik.http.services.app.loadbalancer.server.port=3000"
+
+  dozzle:
+    image: amir20/dozzle:latest
+    # ports:
+    #   - "8888:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+    - "traefik.http.routers.dozzle.rule=Host(`dozzle.localhost`)"
+    - "traefik.http.services.dozzle.loadbalancer.server.port=8080"
 
 volumes:
   mysqldata:
+  dozzle:
+
+networks:
+  default:
+    name: traefik-net
+    external: true

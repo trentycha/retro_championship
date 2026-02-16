@@ -1,0 +1,41 @@
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:lts
+    restart: always
+    command: --http-enabled
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    # ports:
+    #   - "9080:9000"
+    #   - "9443:9443"
+    labels:
+    - "traefik.http.routers.portainer.rule=Host(`portainer.localhost`)"
+    - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+
+  reverse-proxy:
+    image: traefik:latest
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      # - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.http.routers.traefik.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+  whoami:
+    image: traefik/whoami
+    # ports:
+    #   - 8082:80
+    labels:
+      - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
+
+volumes:
+  portainer_data:
+
+networks:
+  default:
+    name: traefik-net
+    external: true
