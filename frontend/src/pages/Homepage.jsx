@@ -43,29 +43,41 @@ const Homepage = () => {
         </div>
 
         <div className="flex items-center gap-6">
-          <div className="">
+          <div className="hover:opacity-80">
             <a href='/' className="relative">
-              <img src='/images/tournaments.jpg' alt="tounrament-home" className="w-170 rounded-xl opacity-50 shadow-xl shadow-black"/>
+              <img src='/images/tournaments.jpg' alt="tounrament-home" className="w-170 rounded-xl opacity-50 shadow-xl shadow-black/30 hover:shadow-black"/>
               <h3 className="absolute top-12 left-12 text-[#F9FF00] font-pixeloid-bold text-3xl">Tous les tournois</h3>
-              <span className="absolute top-87 left-115 bg-[#00DEF5] px-7 py-4 rounded-lg text-white text-xl font-semibold shadow-lg shadow-black/30">Je découvre !</span>
+              <span className="absolute top-87 left-115 bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-xl font-semibold shadow-lg shadow-black/30">Je découvre !</span>
             </a>
           </div>
-          <div className=" relative">
-            <a href='/' className="my-10 mx-10">
-              <img src='/images/login-home.jpg' alt="tournament-home" className="w-125 rounded-xl opacity-50 shadow-xl shadow-black"/>
+          <div className="relative">
+            <a href='/' className="my-10 mx-10 hover:opacity-80">
+              <img src='/images/login-home.jpg' alt="tournament-home" className="w-125 rounded-xl opacity-50 shadow-xl shadow-black/30 hover:shadow-black"/>
               <h3 className="absolute top-15 left-10 text-[#F9FF00] font-pixeloid-bold text-3xl">A vous de jouer !</h3>
-              <span className="absolute top-35 left-65 bg-[#00DEF5] px-7 py-4 rounded-lg text-white text-xl font-semibold shadow-lg shadow-black/30">Je me connecte !</span>
+              <span className="absolute top-35 left-65 bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-xl font-semibold shadow-lg shadow-black/30">Je me connecte !</span>
             </a>
-            <a href='/' className="my-10 mx-10">
-              <img src='/images/about.jpg' alt="tounrament-home" className="w-125 rounded-xl opacity-50 shadow-xl shadow-black"/>
+            <a href='/' className="my-10 mx-10 hover:opacity-80">
+              <img src='/images/about.jpg' alt="tounrament-home" className="w-125 rounded-xl opacity-50 shadow-xl shadow-black/30 hover:shadow-black"/>
               <h3 className="absolute top-72 left-10 text-[#F9FF00] font-pixeloid-bold text-3xl">A propos de <br/> RetroChampionship</h3>
-              <span className="absolute top-98 left-72 bg-[#00DEF5] px-7 py-4 rounded-lg text-white text-xl font-semibold shadow-lg shadow-black/30">Qui sont-ils ?</span>
+              <span className="absolute top-98 left-72 bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-xl font-semibold shadow-lg shadow-black/30">Qui sont-ils ?</span>
             </a>
           </div>
         </div>
 
-        <div className="mt-20 text-xl">
+        <div className="mt-30 text-xl">
           <h4 className='text-[#00DEF5] font-bold'>Les sponsors de RetroChampionship</h4>
+        </div>
+
+        <div className='flex items-center gap-12 mt-10'>
+          <img src='/images/gentle-mates.png' alt="gentle-mates" className="w-50 opacity-50 flex-1"/>
+          <img src='/images/infogrames.png' alt="gentle-mates" className="w-50 opacity-50 flex-1"/>
+          <img src='/images/nintendo.png' alt="gentle-mates" className="w-50 opacity-50 flex-1"/>
+          <img src='/images/sega.png' alt="gentle-mates" className="w-50 opacity-50 flex-1"/>
+          <img src='/images/pepsi.png' alt="gentle-mates" className="w-50 opacity-50 flex-1"/>
+        </div>
+        <div className="relative mb-20">
+          {/* <img src='/images/tetris-two.png' alt="tetris-block" className="absolute left-250 w-50"/> */}
+          <img src='/images/tetris-one.png' alt="tetris-block" className="absolute w-80"/>
         </div>
 
       </div>
