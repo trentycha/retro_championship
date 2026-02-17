@@ -1,7 +1,8 @@
+import '/images/about.jpg'
 
-function Homepage() {
+const Homepage = () => {
   return (
-    <div className="bg-gray-900">
+    <div className="bg-[#1E1E1E]">
       <p className="text-white">Coucou</p>
     </div>
   )
