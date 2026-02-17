@@ -5,8 +5,8 @@ const Header = () => {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <div className="bg-[#1E1E1E]">
-      <div className="flex items-center px-40 py-10">
+    <div className="bg-[#272727]">
+      <div className="flex items-center px-40 py-10 sticky top-0 z-50">
         <img src='/images/Logo.png' alt="logo" className="w-52"/>
         <nav className="bg-[#00DEF5] ml-8 my-3 py-7 px-12 rounded-lg shadow-xl shadow-black
         flex items-center justify-end gap-14 flex-1">
