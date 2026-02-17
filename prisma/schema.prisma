@@ -34,6 +34,7 @@ model MatchStatus {
 model Channel {
   id      Int      @id @default(autoincrement()) @map("Id_channel")
   label   String   @db.VarChar(100)
+  tournaments Tournament[]
   matches Match[]
 
   @@map("channel")
@@ -124,12 +125,14 @@ model Tournament {
   prizeId            Int?             @map("Id_prize")
   gameId             Int?             @map("Id_game")
   tournamentStatusId Int              @map("Id_tournament_status")
+  channelId          Int?             @map("Id_channel")
   
   creator            User             @relation("TournamentCreator", fields: [creatorId], references: [id], onDelete: Cascade)
   winner             User?            @relation("TournamentWinner", fields: [winnerId], references: [id], onDelete: Cascade)
   prize              Prize?           @relation(fields: [prizeId], references: [id])
   game               Game?            @relation(fields: [gameId], references: [id])
   tournamentStatus   TournamentStatus @relation(fields: [tournamentStatusId], references: [id])
+  channel            Channel?         @relation(fields: [channelId], references: [id])
   matches            Match[]
   subscriptions      Sub[]
 

@@ -1,5 +1,7 @@
 # To-Do List du Projet
 
+## 🔧 Back-end
+
 | Étape | Tâche | Statut |
 |-------|-------|--------|
 | **1. Lancement du projet** | | |
@@ -15,8 +17,8 @@
 | | Création des routes Utilisateurs : middlewares, routes et controller | ✅ Terminé |
 | | Tests des routes Utilisateurs sur Postman | ✅ Terminé |
 | | Gestion des autorisations : cryptage de mot de passe, tokens et routes | ✅ Terminé |
-| | Gestion des autorisations de rôles : spectateur, joueur, admin | A faire |
-| | Incrémenter les statistiques à chaque participation de tournoi, match et tournoi gagné | A faire |
+| | Gestion des autorisations de rôles : spectateur, joueur, admin | À faire |
+| | Incrémenter les statistiques à chaque participation de tournoi, match et tournoi gagné | À faire |
 | **4. Routes Tournois** | | |
 | | Création des routes Tournois : middlewares, routes et controller | ✅ Terminé |
 | | Tests des routes Tournois sur Postman | ✅ Terminé |
@@ -35,9 +37,9 @@
 | **9. Documentation Swagger** | | |
 | | Tests des routes avec Swagger | ✅ Terminé |
 | | Installation du package Swagger | En cours |
-  **10. Ajout de la gestion de document** | | |
-| | Configurer Multer | A faire |
-  **11. Renforcer la sécurité** | | |
+| **10. Ajout de la gestion de document** | | |
+| | Configurer Multer | À faire |
+| **11. Renforcer la sécurité** | | |
 | | Installer des packages pour renforcer la sécurité | À faire |
 | **12. Tests automatisés** | | |
 | | Tests unitaires avec Jest | À faire |
@@ -48,3 +50,30 @@
 | | Documentation de déploiement | À faire |
 
 ---
+
+## 🎨 Front-end
+
+| Étape | Tâche | Statut |
+|-------|-------|--------|
+| **1. Design** | | |
+| | Création de la maquette sur Figma | À faire |
+| **2. Initialisation** | | |
+| | Initialisation du projet React | ✅ Terminé |
+| | Configuration de App.jsx et de index.jsx | ✅ Terminé |
+| **3. Composants globaux** | | |
+| | Création du Header | ✅ Terminé |
+| | Création du Footer | À faire |
+| **4. Homepage** | | |
+| | Création de la Homepage | En cours |
+| | Création des composants cartes de la Homepage | En cours |
+| **5. Authentification** | | |
+| | Création de la page de connexion | À faire |
+| | Ajout du service de connexion et du useContext | À faire |
+| **6. Tournois** | | |
+| | Création de la page des tournois | À faire |
+| | Création des composants de la page des tournois | À faire |
+| | Création d'une page de tournoi | À faire |
+| **7. Utilisateur** | | |
+| | Création du profil utilisateur | À faire |
+| **8. Responsive** | | |
+| | Version mobile | À faire |

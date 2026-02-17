@@ -1,78 +1,189 @@
 const { PrismaClient } = require('@prisma/client');
+const bcrypt = require('bcrypt');
 const prisma = new PrismaClient();
 
 async function main() {
-  const userStatus = await prisma.userStatus.createMany({
+
+  await prisma.userStatus.createMany({
     data: [
-      {label: 'Gamer'},
-      {label: 'Admin'},
+      { label: 'Player' },
+      { label: 'Admin' },
+      { label: 'Super-admin' }
     ],
     skipDuplicates: true,
   });
-  console.log('Created user status:', userStatus);
 
-  const license = await prisma.license.createMany({
+  await prisma.license.createMany({
     data: [
-      {name: 'Pacman'},
-      {name: 'Tetris'},
-      {name: 'Pong'},
-      {name: 'Sonic'},
+      { name: 'Pacman' },
+      { name: 'Tetris' },
+      { name: 'Pong' },
+      { name: 'Mario' },
     ],
     skipDuplicates: true,
   });
-  console.log('Created license:', license);
 
-  const typeGame = await prisma.typeGame.createMany({
+  await prisma.typeGame.createMany({
     data: [
-      {name: 'Fighting'},
-      {name: 'Points'},
+      { name: 'Fighting' },
+      { name: 'Score' },
+      { name: '1v1' },
     ],
     skipDuplicates: true,
   });
-  console.log('Created typeGame:', typeGame);
 
-  const matchStatus = await prisma.matchStatus.createMany({
+  await prisma.matchStatus.createMany({
     data: [
-      {label: 'Waiting'},
-      {label: 'In Progress'},
-      {label: 'Over'},
+      { label: 'En attente' },
+      { label: 'En cours' },
+      { label: 'Terminé' }
     ],
     skipDuplicates: true,
   });
-  console.log('Created match status:', matchStatus);
 
-  const tournamentStatus = await prisma.tournamentStatus.createMany({
+  await prisma.tournamentStatus.createMany({
     data: [
-      {label: 'Waiting'},
-      {label: 'In Progress'},
-      {label: 'Over'},
+      { label: 'En attente' },
+      { label: 'En cours' },
+      { label: 'Terminé' }
     ],
     skipDuplicates: true,
   });
-  console.log('Created tournament status:', tournamentStatus);
 
-  const channel = await prisma.channel.createMany({
+  await prisma.channel.createMany({
     data: [
-      {label: 'Room 1'},
-      {label: 'Room 2'},
-      {label: 'Room 3'},
-      {label: 'Room 4'},
-      {label: 'Room 5'},
-      {label: 'Room 6'},
-      {label: 'Room 7'},
-      {label: 'Room 8'},
-      {label: 'Room 9'},
+      { label: 'Link' },
+      { label: 'Mario' },
+      { label: 'Lara' },
+      { label: 'Bowser' }
     ],
     skipDuplicates: true,
   });
-  console.log('Created channel:', channel);
 
+  const licencePacman      = await prisma.license.findFirst({ where: { name: 'Pacman' } });
+  const licenceMario       = await prisma.license.findFirst({ where: { name: 'Mario' } });
+  const licencePong        = await prisma.license.findFirst({ where: { name: 'Pong' } });
+  const typeScore          = await prisma.typeGame.findFirst({ where: { name: 'Score' } });
+  const type1v1            = await prisma.typeGame.findFirst({ where: { name: '1v1' } });
+  const channelLara        = await prisma.channel.findFirst({ where: { label: 'Lara' } });
+  const channelMario       = await prisma.channel.findFirst({ where: { label: 'Mario' } });
+  const channelLink        = await prisma.channel.findFirst({ where: { label: 'Link' } });
+  const statusEnAttente    = await prisma.tournamentStatus.findFirst({ where: { label: 'En attente' } });
+  const statusEnCours      = await prisma.tournamentStatus.findFirst({ where: { label: 'En cours' } });
+  const matchStatusTermine = await prisma.matchStatus.findFirst({ where: { label: 'Terminé' } });
+  const userStatusPlayer   = await prisma.userStatus.findFirst({ where: { label: 'Player' } });
+
+  const gamePacman = await prisma.game.create({
+    data: {
+      name: 'Pacman Score',
+      licenseId: licencePacman.id,
+      typeGameId: typeScore.id,
+    }
+  });
+
+  const gameMario = await prisma.game.create({
+    data: {
+      name: 'Mario Score',
+      licenseId: licenceMario.id,
+      typeGameId: typeScore.id,
+    }
+  });
+
+  const gamePong = await prisma.game.create({
+    data: {
+      name: 'Pong 1v1',
+      licenseId: licencePong.id,
+      typeGameId: type1v1.id,
+    }
+  });
+
+  const hashedPassword = await bcrypt.hash('password123', 10);
+  const players = [];
+
+  for (let i = 1; i <= 12; i++) {
+    const player = await prisma.user.create({
+      data: {
+        mail: `player${i}@retro.com`,
+        password: hashedPassword,
+        username: `player${i}`,
+        birthday: new Date('1995-06-15'),
+        city: 'Paris',
+        createdAt: new Date(),
+        userStatusId: userStatusPlayer.id,
+      }
+    });
+    players.push(player);
+  }
+
+  const prize = await prisma.prize.create({
+    data: {
+      name: 'Prix Tournoi Hiver',
+      description: "Prix du Tournoi d'hiver Pacman",
+      value: 1000.00,
+      userId: players[0].id,
+    }
+  });
+
+  const tournoiPacman = await prisma.tournament.create({
+    data: {
+      name: "Tournoi d'hiver Pacman",
+      startedAt: new Date('2025-01-10T10:00:00'),
+      endedAt: new Date('2025-01-10T18:00:00'),
+      creatorId: players[0].id,
+      prizeId: prize.id,
+      gameId: gamePacman.id,
+      tournamentStatusId: statusEnCours.id,
+      channelId: channelLara.id,
+    }
+  });
+
+  await prisma.tournament.create({
+    data: {
+      name: 'Tournoi Mario Printemps',
+      startedAt: new Date('2025-03-15T10:00:00'),
+      endedAt: new Date('2025-03-15T17:00:00'),
+      creatorId: players[0].id,
+      gameId: gameMario.id,
+      tournamentStatusId: statusEnAttente.id,
+      channelId: channelMario.id,
+    }
+  });
+
+  await prisma.tournament.create({
+    data: {
+      name: 'Tournoi Pong 1v1',
+      startedAt: new Date('2025-07-20T14:00:00'),
+      endedAt: new Date('2025-07-20T20:00:00'),
+      creatorId: players[0].id,
+      gameId: gamePong.id,
+      tournamentStatusId: statusEnAttente.id,
+      channelId: channelLink.id,
+    }
+  });
+
+  const matchesData = [];
+  for (let i = 0; i < 12; i++) {
+    const player1 = players[i];
+    const player2 = players[(i + 1) % 12];
+    matchesData.push({
+      startedAt: new Date(`2025-01-10T${10 + Math.floor(i / 2)}:${i % 2 === 0 ? '00' : '30'}:00`),
+      endedAt:   new Date(`2025-01-10T${10 + Math.floor(i / 2)}:${i % 2 === 0 ? '25' : '55'}:00`),
+      tournamentId: tournoiPacman.id,
+      winnerId: player1.id,
+      channelId: channelLara.id,
+      player1Id: player1.id,
+      player2Id: player2.id,
+      matchStatusId: matchStatusTermine.id,
+    });
+  }
+
+  await prisma.match.createMany({ data: matchesData });
+  console.log('Ok !');
 }
 
 main()
   .then(async () => {
     await prisma.$disconnect();
-    console.log('Ok !');
   })
   .catch(async (e) => {
     console.error(e);

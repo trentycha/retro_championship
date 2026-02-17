@@ -3,7 +3,18 @@ const { prisma } = require('../lib/prisma');
 exports.getAllTournaments = async (req, res, next) => {
 
             try {
-                const user = await prisma.tournament.findMany();
+                const user = await prisma.tournament.findMany(
+                    {
+                    include: {
+                        tournamentStatus: true,
+                        creator: true,
+                        winner: true,
+                        prize: true,
+                        game: true,
+                        channel:  true
+                    }
+                    }
+                );
                 res.status(200).json(user);
             } catch (error) {
                 res.status(400).json( {error : error.message});
