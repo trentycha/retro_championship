@@ -76,3 +76,6 @@
 | | Création du profil utilisateur | ✅ Terminé |
 | **8. Responsive** | | |
 | | Version mobile | À faire |
+| **9. Erreurs** | | |
+| | Erreur 404 | À faire |
+| | Erreur 500 | À faire |

@@ -126,6 +126,8 @@ model Tournament {
   gameId             Int?             @map("Id_game")
   tournamentStatusId Int              @map("Id_tournament_status")
   channelId          Int?             @map("Id_channel")
+  imageIcon          String?          @db.VarChar(255)
+  imageDetails       String?          @db.VarChar(255)
   
   creator            User             @relation("TournamentCreator", fields: [creatorId], references: [id], onDelete: Cascade)
   winner             User?            @relation("TournamentWinner", fields: [winnerId], references: [id], onDelete: Cascade)
