@@ -1,5 +1,5 @@
 const TOKEN_KEY = 'retro-championship';
-const USER_KEY = 'retroo-championship';
+const USER_KEY = 'retro-championship';
 
 const AuthService = {
 
