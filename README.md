@@ -1,6 +1,6 @@
 # To-Do List du Projet
 
-## 🔧 Back-end
+## Back-end
 
 | Étape | Tâche | Statut |
 |-------|-------|--------|
@@ -44,31 +44,28 @@
 | **12. Tests automatisés** | | |
 | | Tests unitaires avec Jest | À faire |
 | | Tests d'intégration des routes | À faire |
-| **13. Déploiement** | | |
-| | Configuration pour la production | À faire |
-| | CI/CD avec GitHub Actions | À faire |
-| | Documentation de déploiement | À faire |
 
 ---
 
-## 🎨 Front-end
+## Front-end
 
 | Étape | Tâche | Statut |
 |-------|-------|--------|
 | **1. Design** | | |
-| | Création de la maquette sur Figma | À faire |
+| | Création de la maquette sur Figma | ✅ Terminé |
 | **2. Initialisation** | | |
 | | Initialisation du projet React | ✅ Terminé |
 | | Configuration de App.jsx et de index.jsx | ✅ Terminé |
 | **3. Composants globaux** | | |
 | | Création du Header | ✅ Terminé |
-| | Création du Footer | À faire |
+| | Création du Footer | ✅ Terminé |
 | **4. Homepage** | | |
-| | Création de la Homepage | En cours |
-| | Création des composants cartes de la Homepage | En cours |
+| | Création de la Homepage | ✅ Terminé |
+| | Création des composants cartes de la Homepage | ✅ Terminé |
+| | Ajouter des animations | En cours |
 | **5. Authentification** | | |
-| | Création de la page de connexion | À faire |
-| | Ajout du service de connexion et du useContext | À faire |
+| | Création de la page de connexion | ✅ Terminé |
+| | Configuration du service de connexion et du useContext | À faire |
 | **6. Tournois** | | |
 | | Création de la page des tournois | À faire |
 | | Création des composants de la page des tournois | À faire |
