@@ -65,12 +65,14 @@
 | | Ajouter des animations | En cours |
 | **5. Authentification** | | |
 | | Création de la page de connexion | ✅ Terminé |
-| | Configuration du service de connexion et du useContext | À faire |
+| | Configuration du service de connexion et du useContext | ✅ Terminé |
+| | Ajouter le bouton logout | A faire |
+| | Gestion des autorisations sur la page profil | ✅ Terminé |
 | **6. Tournois** | | |
 | | Création de la page des tournois | À faire |
 | | Création des composants de la page des tournois | À faire |
 | | Création d'une page de tournoi | À faire |
 | **7. Utilisateur** | | |
-| | Création du profil utilisateur | À faire |
+| | Création du profil utilisateur | ✅ Terminé |
 | **8. Responsive** | | |
 | | Version mobile | À faire |

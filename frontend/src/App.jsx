@@ -3,6 +3,7 @@ import Homepage from './pages/Homepage.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import Login from './pages/Login.jsx'
+import Profile from './pages/Profile.jsx'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Homepage />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/profile/:id' element={<Profile />} />
       </Routes>
       <Footer />
     </>
