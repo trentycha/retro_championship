@@ -66,7 +66,7 @@
 | **5. Authentification** | | |
 | | Création de la page de connexion | ✅ Terminé |
 | | Configuration du service de connexion et du useContext | ✅ Terminé |
-| | Ajouter le bouton logout | A faire |
+| | Ajouter le bouton logout et géré les boutons du header en fonction de la connexion | ✅ Terminé |
 | | Gestion des autorisations sur la page profil | ✅ Terminé |
 | **6. Tournois** | | |
 | | Création de la page des tournois | À faire |
