@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="flex items-start justify-end gap-30 flex-1 mx-20 my-10">
           <div className="flex flex-col gap-2">
             <h4 className='text-[#F9FF00] font-pixeloid-bold text-2xl'>Tournois</h4>
-            <Link to='/' className="text-[#00DEF5] text-xl font-semibold hover:text-[#F9FF00]">Tous les tournois</Link>
+            <Link to='/tournaments' className="text-[#00DEF5] text-xl font-semibold hover:text-[#F9FF00]">Tous les tournois</Link>
             <Link to='/' className="text-[#00DEF5] text-xl font-semibold hover:text-[#F9FF00]">Chaînes</Link>
             <Link to='/' className="text-[#00DEF5] text-xl font-semibold hover:text-[#F9FF00]">Jeux</Link>
           </div>
@@ -22,7 +22,7 @@ const Footer = () => {
           </div>
           <div className="flex flex-col gap-2">
             <h4 className='text-[#F9FF00] font-pixeloid-bold text-2xl'>Pour vous</h4>
-            <Link to='/' className="text-[#00DEF5] text-xl font-semibold hover:text-[#F9FF00]">Je me connecte</Link>
+            <Link to='/login' className="text-[#00DEF5] text-xl font-semibold hover:text-[#F9FF00]">Je me connecte</Link>
             <div className='flex items-center justify-end gap-3 flex-1 mt-3'>
               <Link to='/'>
                 <img src='/images/youtube.png' alt="youtube" className="w-12 hover:opacity-50"/>

@@ -44,14 +44,14 @@ const Homepage = () => {
 
         <div className="flex items-center gap-6">
           <div className="hover:opacity-80">
-            <a href='/' className="relative">
+            <a href='/tournaments' className="relative">
               <img src='/images/tournaments.jpg' alt="tounrament-home" className="w-170 rounded-xl opacity-50 shadow-xl shadow-black/30 hover:shadow-black"/>
               <h3 className="absolute top-12 left-12 text-[#F9FF00] font-pixeloid-bold text-3xl">Tous les tournois</h3>
               <span className="absolute top-87 left-115 bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-xl font-semibold shadow-lg shadow-black/30">Je découvre !</span>
             </a>
           </div>
           <div className="relative">
-            <a href='/' className="my-10 mx-10 hover:opacity-80">
+            <a href='/login' className="my-10 mx-10 hover:opacity-80">
               <img src='/images/login-home.jpg' alt="tournament-home" className="w-125 rounded-xl opacity-50 shadow-xl shadow-black/30 hover:shadow-black"/>
               <h3 className="absolute top-15 left-10 text-[#F9FF00] font-pixeloid-bold text-3xl">A vous de jouer !</h3>
               <span className="absolute top-35 left-65 bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-xl font-semibold shadow-lg shadow-black/30">Je me connecte !</span>

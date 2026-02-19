@@ -31,7 +31,7 @@ const Tournaments = () => {
                     .filter(c => c.tournamentStatus?.label === 'En cours')
                     .sort((a, b) => new Date(a.startedAt) - new Date(b.startedAt))
                     .map(c => (
-                        <TournamentsCard key={c.id} image={c.imageIcon} name={c.name} start={c.startedAt} end={c.endedAt} status={c.tournamentStatus?.label} trophy={c.prize?.value} room={c.channel?.label}/>
+                        <TournamentsCard key={c.id} id={c.id} image={c.imageIcon} name={c.name} start={c.startedAt} end={c.endedAt} status={c.tournamentStatus?.label} trophy={c.prize?.value} room={c.channel?.label}/>
                     ))
                 }
             </div>

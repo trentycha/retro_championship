@@ -22,7 +22,7 @@ const Header = () => {
         <nav className="bg-[#00DEF5] ml-8 my-3 py-7 px-12 rounded-lg shadow-xl shadow-black/30
         flex items-center justify-end gap-14 flex-1">
 
-          <Link to='/' className="text-white text-lg font-semibold hover:text-[#F9FF00]">Tournois</Link>
+          <Link to='/tournaments' className="text-white text-lg font-semibold hover:text-[#F9FF00]">Tournois</Link>
           <Link to='/' className="text-white text-lg font-semibold hover:text-[#F9FF00]">Chaînes</Link>
           <Link to='/' className="text-white text-lg font-semibold hover:text-[#F9FF00]">Jeux</Link>
           
