@@ -26,6 +26,14 @@ exports.getTournamentById = async (req, res, next) => {
             try {
                 const tournament = await prisma.tournament.findUnique({
                     where: { id: parseInt(req.params.id) },
+                    include: {
+                        tournamentStatus: true,
+                        creator: true,
+                        winner: true,
+                        prize: true,
+                        game: true,
+                        channel:  true
+                    }
                 });
                 res.status(200).json(tournament);
             } catch (error) {

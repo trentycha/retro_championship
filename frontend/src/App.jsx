@@ -5,6 +5,7 @@ import Footer from './components/Footer.jsx'
 import Login from './pages/Login.jsx'
 import Profile from './pages/Profile.jsx'
 import Tournaments from './pages/Tournaments.jsx'
+import TournamentDetail from './pages/TournamentDetail.jsx'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/profile/:id' element={<Profile />} />
         <Route path='/tournaments' element={<Tournaments />} />
+        <Route path='/tournament/:id' element={<TournamentDetail />} />
       </Routes>
       <Footer />
     </>
