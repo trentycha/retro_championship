@@ -7,11 +7,12 @@ import Profile from './pages/Profile.jsx'
 import Tournaments from './pages/Tournaments.jsx'
 import TournamentDetail from './pages/TournamentDetail.jsx'
 import Loading from './pages/Loading.jsx'
+import Error404 from './pages/Error404.jsx'
 
 function App() {
   const location = useLocation();
 
-  const hide = location.pathname === '/loading';
+  const hide = ['/loading', '*'].includes(location.pathname);
 
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
         <Route path='/tournaments' element={<Tournaments />} />
         <Route path='/tournament/:id' element={<TournamentDetail />} />
         <Route path='/loading' element={<Loading />} />
+        <Route path='*' element={<Error404 />} />
       </Routes>
       {!hide && <Footer />}
     </>
