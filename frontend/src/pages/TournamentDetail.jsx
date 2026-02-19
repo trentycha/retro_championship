@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Loading from './Loading.jsx'
 
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState(null);
@@ -23,7 +24,7 @@ const TournamentDetail = () => {
     }, [id]);
 
     if(loading) {
-        return <div>Chargement...</div>
+        return <Loading />
     }
 
 

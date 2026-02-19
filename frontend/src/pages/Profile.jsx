@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import Loading from './Loading.jsx'
 
 const Profile = () => {
     const [user, setUser] = useState("");
     const {id} = useParams();
     const { user: currentUser } = useAuth();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
@@ -14,6 +16,7 @@ const Profile = () => {
                 const response = await fetch(`http://localhost:3000/api/user/${id}`);
                 const data = await response.json();
                 setUser(data);
+                setLoading(false);
             } catch(error) {
                 {error.message}
             }
@@ -24,6 +27,10 @@ const Profile = () => {
     }, [id])
 
     const isOwner = currentUser && currentUser.id === parseInt(id);
+
+    if(loading) {
+        return <Loading />;
+    }
 
   return (
     <div className="bg-[#272727]">

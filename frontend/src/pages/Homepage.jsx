@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import HomeCard from '../components/HomeCard.jsx'
+import Loading from './Loading.jsx'
 
 const Homepage = () => {
   const [cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchThreeCards = async () => {
@@ -10,6 +12,7 @@ const Homepage = () => {
         const response = await fetch('http://localhost:3000/api/tournament');
         const data = await response.json();
         setCards(data);
+        setLoading(false);
       } catch(error) {
         {error.message};
       }
@@ -17,6 +20,10 @@ const Homepage = () => {
 
     fetchThreeCards();
   }, [])
+
+  if(loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="bg-[#272727]">

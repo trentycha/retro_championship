@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import TournamentsCard from '../components/TournamentsCard.jsx'
+import Loading from './Loading.jsx'
 
 const Tournaments = () => {
     const [cards, setCards] = useState([]);
     const [activeButton, setActiveButton] = useState("En cours");
+    const [loading, setLoading] = useState(true);
     
       useEffect(() => {
         const fetchThreeCards = async () => {
@@ -11,6 +13,7 @@ const Tournaments = () => {
             const response = await fetch('http://localhost:3000/api/tournament');
             const data = await response.json();
             setCards(data);
+            setLoading(false);
           } catch(error) {
             {error.message};
           }
@@ -20,7 +23,9 @@ const Tournaments = () => {
       }, [])
 
     const filteredCards = cards.filter(c => c.tournamentStatus?.label === activeButton).sort((a, b) => new Date(a.startedAt) - new Date(b.startedAt));
-
+    if(loading){
+      return <Loading />
+    }
 
   return (
     <div className="bg-[#272727]">
