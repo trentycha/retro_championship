@@ -22,7 +22,7 @@ const Header = () => {
           <img src='/images/Logo.png' alt="logo" className="w-25 xl:w-52"/>
         </a>
 
-        {isOpen ? <img src='/images/header.png' alt="menu-burger" className="w-10 xl:hidden"
+        {isOpen && burger ? <img src='/images/header.png' alt="menu-burger" className="w-10 xl:hidden"
         onClick={() => {setIsOpen(false), setBurger(false)}}/>
         : <img src='/images/prochain.png' alt="menu-burger-open" className="w-10 xl:hidden"
         onClick={() => {setIsOpen(true), setBurger(true)}}/>
