@@ -5,8 +5,8 @@ const Footer = () => {
   return (
     <div className="bg-[#272727]">
       <div className="px-4 py-4 xl:px-40 xl:pb-20 xl:pt-20">
-        <img src='/images/footer.png' alt="pacman-footer" className="hidden xl:w-full"/>
-        <img src='/images/resp-footer.png' alt="pacman-responsive-footer" className="w-full"/>
+        <img src='/images/footer.png' alt="pacman-footer" className="hidden xl:block xl:w-full"/>
+        <img src='/images/resp-footer.png' alt="pacman-responsive-footer" className="xl:hidden w-full"/>
 
         <div className="pl-5 xl:flex xl:items-start xl:justify-end xl:gap-30 xl:flex-1 xl:mx-20 xl:my-10">
           <div className="flex flex-col gap-2 pt-5">
