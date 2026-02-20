@@ -1,10 +1,31 @@
 import { useState, useEffect } from 'react'
 import HomeCard from '../components/HomeCard.jsx'
 import Loading from './Loading.jsx'
+import MenuBurger from '../components/MenuBurger.jsx'
 
 const Homepage = () => {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const carousel = [<img src="/images/gentle-mates.png" alt="gentle-mates" className="w-50 bg-[#272727]" />,
+     <img src="/images/infogrames.png" alt="infogrames" className="w-50 bg-[#272727]" />,
+      <img src="/images/nintendo.png" alt="nintendo" className="w-50 bg-[#272727]" />,
+       <img src="/images/sega.png" alt="sega" className="w-50 bg-[#272727]" />,
+        <img src="/images/pepsi.png" alt="pepsi" className="w-50 bg-[#272727]" />]
+
+  const [image, setImage] = useState(carousel[0]);
+
+  const handleCarouselPlus = () => {
+    carousel.forEach(c => {
+      setImage(c +1);
+    })
+  }
+
+  const handleCarouselMoins = () => {
+    carousel.forEach(c => {
+      setImage(c -1);
+    })
+  }
 
   useEffect(() => {
     const fetchThreeCards = async () => {
@@ -28,25 +49,30 @@ const Homepage = () => {
   return (
     <div className="bg-[#272727]">
 
-      <div className="px-40 pb-20">
+      <div className="px-5 pb-5 xl:px-40 xl:pb-20">
 
-        <div className="relative">
-          <img src='/images/homepage.png' alt="homepage" className="w-500 rounded-xl opacity-50"/>
-          <h1 className="absolute top-50 left-15 text-[#F9FF00] font-pixeloid-bold text-6xl">Tournois e-sport <br/> retrogaming</h1>
-          <p className="absolute top-90 left-15 text-white text-2xl">Inscrivez-vous et participez en illimité à des tournois <br/>
+        <div className="relative pt-4">
+          <img src='/images/homepage.png' alt="homepage" className="w-100 xl:w-500 rounded-xl opacity-50"/>
+          <h1 className="absolute top-10 left-5 xl:top-50 xl:left-15 text-[#F9FF00] font-pixeloid-bold text-lg leading-none xl:text-6xl">Tournois e-sport <br/> retrogaming</h1>
+          <p className="absolute xl:hidden top-20 left-5 text-white text-sm">Inscrivez-vous et participez en illimité à des tournois
             de retro-gaming à travers toute la France !</p>
-          <img src='/images/mario-home.png' alt="mario-home" className="absolute top-45 left-210 w-120"/>
+          <p className="hidden absolute xl:top-90 xl:left-15 text-white xl:text-2xl">Inscrivez-vous et participez en illimité à des tournois <br/>
+            de retro-gaming à travers toute la France !</p>
+          <img src='/images/mario-home.png' alt="mario-home" className="absolute top-25 left-70 w-25 xl:top-45 xl:left-210 xl:w-120"/>
         </div>
         
-        <div className="mt-20 text-xl">
+        <div className="mt-10 xl:mt-20 xl:text-xl">
           <h4 className='text-[#00DEF5] font-bold'>Prochains tournois...</h4>
         </div>
-        <div className="flex gap-10">
+        <div className="hidden xl:flex xl:gap-10">
+          {cards.slice(0, 3).map(c => (<HomeCard key={c.id} id={c.id} status={c.tournamentStatus.label} name={c.name} channel={c.channel.label}/>))}
+        </div>
+        <div className="xl:hidden">
           {cards.slice(0, 3).map(c => (<HomeCard key={c.id} id={c.id} status={c.tournamentStatus.label} name={c.name} channel={c.channel.label}/>))}
         </div>
 
         <div>
-          <img src='/images/separation.png' alt="pacman-ghost-separation" className="w-100 mx-100 my-20"/>
+          <img src='/images/separation.png' alt="pacman-ghost-separation" className="w-60 mx-auto py-5 xl:w-100 xl:mx-100 xl:my-20"/>
         </div>
 
         <div className="flex items-center gap-6">
@@ -75,7 +101,13 @@ const Homepage = () => {
           <h4 className='text-[#00DEF5] font-bold'>Les sponsors de RetroChampionship</h4>
         </div>
 
-        <div className='flex items-center gap-12 mt-10'>
+        <div className="h-56 flex xl:hidden">
+        <button onClick={handleCarouselPlus}>Flèche</button>
+          {image}
+        <button onClick={handleCarouselMoins}>Flèche</button>
+        </div>
+
+        <div className='hidden xl:flex items-center gap-12 mt-10'>
           <img src='/images/gentle-mates.png' alt="gentle-mates" className="w-50 opacity-50 flex-1"/>
           <img src='/images/infogrames.png' alt="gentle-mates" className="w-50 opacity-50 flex-1"/>
           <img src='/images/nintendo.png' alt="gentle-mates" className="w-50 opacity-50 flex-1"/>

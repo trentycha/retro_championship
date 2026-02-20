@@ -22,7 +22,9 @@ const Tournaments = () => {
         fetchThreeCards();
       }, [])
 
-    const filteredCards = cards.filter(c => c.tournamentStatus?.label === activeButton).sort((a, b) => new Date(a.startedAt) - new Date(b.startedAt));
+    const filteredCards = cards.filter(c => c.tournamentStatus?.label === activeButton)
+    .sort((a, b) => new Date(a.startedAt) - new Date(b.startedAt));
+    
     if(loading){
       return <Loading />
     }

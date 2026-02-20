@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
+import MenuBurger from '../components/MenuBurger.jsx'
 
 const Header = () => {
   const [isHoveredLogin, setIsHoveredLogin] = useState(false)
   const [isHoveredLogout, setIsHoveredLogout] = useState(false)
   const { isAuthenticated, logout, user: currentUser } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const [burger, setBurger] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -13,14 +16,20 @@ const Header = () => {
 
   return (
     <div className="bg-[#272727]">
-      <div className="flex items-center px-40 py-10 sticky top-0 z-50">
+      <div className="flex justify-between items-center px-6 py-5 xl:px-40 xl:py-10 sticky top-0 z-50">
 
         <a href='/'>
-          <img src='/images/Logo.png' alt="logo" className="w-52"/>
+          <img src='/images/Logo.png' alt="logo" className="w-25 xl:w-52"/>
         </a>
 
-        <nav className="bg-[#00DEF5] ml-8 my-3 py-7 px-12 rounded-lg shadow-xl shadow-black/30
-        flex items-center justify-end gap-14 flex-1">
+        {isOpen ? <img src='/images/header.png' alt="menu-burger" className="w-10 xl:hidden"
+        onClick={() => {setIsOpen(false), setBurger(false)}}/>
+        : <img src='/images/prochain.png' alt="menu-burger-open" className="w-10 xl:hidden"
+        onClick={() => {setIsOpen(true), setBurger(true)}}/>
+        }
+        
+        <nav className="hidden xl:bg-[#00DEF5] xl:ml-8 xl:my-3 xl:py-7 xl:px-12 xl:rounded-lg xl:shadow-xl xl:shadow-black/30
+        xl:flex xl:items-center xl:justify-end xl:gap-14 xl:flex-1">
 
           <Link to='/tournaments' className="text-white text-lg font-semibold hover:text-[#F9FF00]">Tournois</Link>
           <Link to='/' className="text-white text-lg font-semibold hover:text-[#F9FF00]">Chaînes</Link>
@@ -42,9 +51,13 @@ const Header = () => {
           
           }
           
-
         </nav>
 
+        {isOpen && (
+        <div className="absolute top-full left-0 w-full z-50">
+          <MenuBurger />
+        </div>
+      )}
       </div>
     </div>
   )
