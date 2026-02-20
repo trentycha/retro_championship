@@ -5,7 +5,7 @@ const TournamentsCard = (props) => {
 
   return (
 
-    <div onClick={() => navigate(`/tournaments/${props.id}`)} className="bg-[#343434] mx-5 xl:mx-0 rounded-2xl shadow-xl shadow-black/30 xl:flex xl:items-start xl:mt-10 xl:mb-10">
+    <div onClick={() => navigate(`/tournament/${props.id}`)} className="bg-[#343434] mx-5 xl:mx-0 rounded-2xl shadow-xl shadow-black/30 xl:flex xl:items-start xl:mt-10 xl:mb-10">
 
         <div className="xl:flex xl:justify-end">
             <img src={props.image} alt="click" className="w-full rounded-t-xl xl:rounded-t-none xl:w-120 xl:rounded-l-xl"/>
