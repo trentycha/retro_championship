@@ -8,12 +8,11 @@ import Tournaments from './pages/Tournaments.jsx'
 import TournamentDetail from './pages/TournamentDetail.jsx'
 import Loading from './pages/Loading.jsx'
 import Error404 from './pages/Error404.jsx'
-import MenuBurger from './components/MenuBurger.jsx'
 
 function App() {
   const location = useLocation();
 
-  const hide = ['/loading', '*'].includes(location.pathname);
+  const hide = ['/loading'].includes(location.pathname);
 
   return (
     <>
@@ -26,7 +25,6 @@ function App() {
         <Route path='/tournament/:id' element={<TournamentDetail />} />
         <Route path='/loading' element={<Loading />} />
         <Route path='*' element={<Error404 />} />
-        <Route path='/burger' element={<MenuBurger />} />
       </Routes>
       {!hide && <Footer />}
     </>

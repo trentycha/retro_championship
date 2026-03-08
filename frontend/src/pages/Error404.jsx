@@ -1,7 +1,7 @@
 const Error404 = () => {
 
   return (
-    <div className="bg-[#272727] pl-7 pt-10 xl:pt-0 xl:pl-0 xl:flex items-center gap-10 justify-center pb-15 xl:pb-0 xl:min-h-screen">
+    <div className="bg-[#272727] pl-7 pt-10 xl:pt-0 xl:pl-0 xl:flex items-center gap-10 justify-center pb-15 xl:pb-0">
       <div>
             <img src='/images/error.gif' alt="loading" className="w-70 pl-8 xl:pl-0 xl:w-100"/>
         </div>

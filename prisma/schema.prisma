@@ -151,6 +151,7 @@ model Match {
   player1Id     Int?          @map("Id_user_1")
   player2Id     Int?          @map("Id_user_2")
   matchStatusId Int?          @map("Id_match_status")
+  roundMatchId  Int?          @map("Id_round_match")
   
   tournament    Tournament?   @relation(fields: [tournamentId], references: [id])
   winner        User?         @relation("MatchWinner", fields: [winnerId], references: [id], onDelete: Cascade)
@@ -158,8 +159,17 @@ model Match {
   player1       User?         @relation("MatchPlayer1", fields: [player1Id], references: [id], onDelete: Cascade)
   player2       User?         @relation("MatchPlayer2", fields: [player2Id], references: [id], onDelete: Cascade)
   matchStatus   MatchStatus?  @relation(fields: [matchStatusId], references: [id])
+  roundMatch    RoundMatch?   @relation(fields: [roundMatchId], references: [id])
 
   @@map("match_")
+}
+
+model RoundMatch {
+  id      Int     @id @default(autoincrement()) @map("Id_round_match")
+  label   String  @db.VarChar(50)
+  matches Match[]
+
+  @@map("round_match")
 }
 
 model Sub {

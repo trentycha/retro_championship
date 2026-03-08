@@ -47,7 +47,7 @@ const Homepage = () => {
 
       <div className="px-5 pb-5 xl:px-40 xl:pb-20">
 
-        <div className="relative pt-4">
+        <div className="relative pt-4 xl:pt-0">
           <img src='/images/homepage.png' alt="homepage" className="hidden xl:block xl:w-500 rounded-xl opacity-50"/>
           <img src='/images/responsive-homepage.png' alt="homepage" className="w-100 xl:hidden rounded-xl opacity-50"/>
           <h1 className="absolute top-12 left-7 xl:top-50 xl:left-15 text-[#F9FF00] font-pixeloid-bold text-lg leading-none xl:text-6xl">Tournois e-sport <br/> retrogaming</h1>
@@ -69,7 +69,7 @@ const Homepage = () => {
         </div>
 
         <div>
-          <img src='/images/separation.png' alt="pacman-ghost-separation" className="w-60 mx-auto py-10 xl:w-100 xl:mx-100 xl:my-20"/>
+          <img src='/images/separation.png' alt="pacman-ghost-separation" className="w-60 mx-auto py-10 xl:w-100 xl:my-10"/>
         </div>
 
         <div className="xl:hidden">
@@ -102,7 +102,7 @@ const Homepage = () => {
           </div>
         </div>
 
-        <div className="hidden xl:flex xl:items-center xlgap-6">
+        <div className="hidden xl:flex xl:items-center xl:gap-6">
           <div className="hover:opacity-80">
             <a href='/tournaments' className="relative">
               <img src='/images/tournaments.jpg' alt="tournament-home" className="w-170 rounded-xl opacity-50 shadow-xl shadow-black/30 hover:shadow-black"/>

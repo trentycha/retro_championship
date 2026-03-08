@@ -69,13 +69,12 @@
 | | Ajouter le bouton logout et géré les boutons du header en fonction de la connexion | ✅ Terminé |
 | | Gestion des autorisations sur la page profil | ✅ Terminé |
 | **6. Tournois** | | |
-| | Création de la page des tournois | À faire |
-| | Création des composants de la page des tournois | À faire |
+| | Création de la page des tournois | ✅ Terminé |
 | | Création d'une page de tournoi | À faire |
 | **7. Utilisateur** | | |
 | | Création du profil utilisateur | ✅ Terminé |
 | **8. Responsive** | | |
 | | Version mobile | À faire |
-| **9. Erreurs** | | |
-| | Erreur 404 | À faire |
-| | Erreur 500 | À faire |
+| **9. Erreur et loading** | | |
+| | Erreur 404 | ✅ Terminé |
+| | Loading | ✅ Terminé |
