@@ -170,6 +170,9 @@ exports.getAllMatchesFromOneTournament = async (req, res, next) => {
                 matchStatus: {
                     select: { label: true },
                 },
+                roundMatch: {
+                    select: { id: true, label: true },
+                },
             },
         });
 

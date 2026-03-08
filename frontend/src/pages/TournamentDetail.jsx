@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loading from './Loading.jsx'
+import MatchCard from '../components/MatchCard.jsx'
 
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [rounds, setRounds] = useState([]);
     const {id} = useParams();
 
     useEffect(() => {
-
         const fetchTournament = async () => {
             try {
                 const response = await fetch(`http://localhost:3000/api/tournament/${id}`);
@@ -23,10 +24,23 @@ const TournamentDetail = () => {
         fetchTournament();
     }, [id]);
 
+    useEffect(() => {
+        const fetchMatches = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/api/tournament/${id}/matches`);
+                const dataMatches = await response.json();
+
+            } catch (error) {
+                console.error(error.message);
+            }
+        };
+
+        fetchMatches();
+    }, [id]);
+
     if(loading) {
         return <Loading />
     }
-
 
   return (
     <div className="bg-[#272727]">
@@ -67,6 +81,21 @@ const TournamentDetail = () => {
             </div>
           </div>
 
+        </div>
+
+        <div className="mt-30">
+            <div className="flex items-start pb-6">
+                {rounds.map((round) => (
+                    <div key={round.roundId} className="flex items-start px-10">
+                        <div className="flex flex-col min-w-[220px]">
+                            <span className="text-gray-400 text-xs mb-4 px-2">{round.label}</span>
+                            <div>
+                                {round.matches.map((match) => <MatchCard key={match.id} match={match} />)}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
         
         </div>
