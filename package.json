@@ -6,7 +6,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "jest",
-    "swagger": "node ./swagger.js"
+    "swagger": "node ./swagger.js",
+    "postinstall": "prisma generate"
   },
   "author": "",
   "license": "ISC",
