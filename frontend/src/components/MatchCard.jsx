@@ -1,8 +1,17 @@
 const MatchCard = (props) => {
 
+  let state = "my-5";
+  if (props.round === "Quart de finale") {
+    state = "my-30";
+  } else if (props.round === "Demi finale") {
+    state = "my-60";
+  } else if (props.round === "Finale") {
+    state = "my-100";
+  };
+
   return (
 
-    <div className="bg-[#272727] rounded-2xl w-52 shadow-xl shadow-black/30 overflow-hidden px-4 py-4 my-5">
+    <div className={`bg-[#272727] rounded-2xl w-52 shadow-xl shadow-black/30 overflow-hidden px-4 py-4 my-5 ${state}`}>
 
       <div className="px-3 py-1">
         <span className="text-[10px] text-gray-500 uppercase tracking-widest">

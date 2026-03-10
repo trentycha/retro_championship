@@ -37,8 +37,8 @@ const TournamentDetail = () => {
                 setRounds(
                     roundIds.map((roundId) => ({
                         roundId,
-                        label: dataMatches.find((m) => m.roundMatch?.id === roundId)?.roundMatch?.label,
-                        matches: dataMatches.filter((m) => m.roundMatch?.id === roundId),
+                        label: dataMatches.find((m) => m.roundMatch?.id === roundId)?.roundMatch?.label, //on cherche le premier match qui correspond à l'id du round
+                        matches: dataMatches.filter((m) => m.roundMatch?.id === roundId), //on récupère tous les matchs de ce round
                     }))
                 );
 
@@ -102,7 +102,7 @@ const TournamentDetail = () => {
                         <div className="flex flex-col min-w-[220px]">
                             <div className="text-gray-400 text-xs mb-4 px-2">{round.label}</div>
                             <div>
-                                {round.matches.map((match) => <MatchCard key={match.id} match={match} />)}
+                                {round.matches.map((match) => <MatchCard key={match.id} match={match} round={round.label}/>)}
                             </div>
                         </div>
                     </div>

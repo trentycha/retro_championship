@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Loading from './Loading.jsx'
+import AuthService from '../services/AuthService';
 
 const Profile = () => {
     const [user, setUser] = useState("");
     const {id} = useParams();
-    const { user: currentUser } = useAuth();
+    const { logout, user: currentUser } = useAuth();
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -25,6 +27,22 @@ const Profile = () => {
         fetchUser();
 
     }, [id])
+
+    const handleDelete = async (id) => {
+
+        try {
+            await fetch(`http://localhost:3000/api/user/${id}`, {
+                method: 'DELETE',
+                headers: AuthService.isAuthHeaders()
+            });
+
+            logout();
+            navigate('/');
+
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
 
     const isOwner = currentUser && currentUser.id === parseInt(id);
 
@@ -65,7 +83,7 @@ const Profile = () => {
 
                             {isOwner ?
                                 <div className="flex justify-end">
-                                    <button className="bg-[#edf500] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6">Supprimer</button>
+                                    <button onClick={(() => handleDelete(user.id))} className="bg-[#edf500] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6">Supprimer</button>
                                     <button className="bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 ml-4">Modifier</button>
                                 </div>
                             : null}
