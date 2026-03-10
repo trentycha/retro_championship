@@ -62,10 +62,12 @@ const Homepage = () => {
           <h4 className='text-[#00DEF5] font-bold'>Prochains tournois...</h4>
         </div>
         <div className="hidden xl:flex xl:gap-10">
-          {cards.slice(0, 3).map(c => (<HomeCard key={c.id} id={c.id} status={c.tournamentStatus.label} name={c.name} channel={c.channel.label}/>))}
+          {cards.slice(0, 3).map(c => (<HomeCard key={c.id} id={c.id} status={c.tournamentStatus.label} 
+          name={c.name} channel={c.channel.label}/>))}
         </div>
         <div className="xl:hidden">
-          {cards.slice(0, 3).map(c => (<HomeCard key={c.id} id={c.id} status={c.tournamentStatus.label} name={c.name} channel={c.channel.label}/>))}
+          {cards.slice(0, 3).map(c => (<HomeCard key={c.id} id={c.id} status={c.tournamentStatus.label} 
+          name={c.name} channel={c.channel.label}/>))}
         </div>
 
         <div>

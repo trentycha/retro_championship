@@ -88,8 +88,8 @@ const TournamentDetail = () => {
             </div>
             <div className="w-px bg-[#4b4b4b] self-stretch"></div>
             <div>
-                <button className="bg-[#c0c700] hover:bg-white hover:text-[#c0c700] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6">Je m'inscris !</button>
-                <button className="bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 ml-4">Je regarde !</button>
+                <button className="bg-[#c0c700] hover:bg-white hover:text-[#c0c700] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 cursor-pointer">Je m'inscris !</button>
+                <button className="bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 ml-4 cursor-pointer">Je regarde !</button>
             </div>
           </div>
 

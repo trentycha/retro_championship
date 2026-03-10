@@ -39,15 +39,15 @@ const Tournaments = () => {
 
             <div className="flex pt-8 pl-5 xl:pl-0 xl:pt-10 pb-5 xl:pb-5 gap-3 xl:gap-5">
               <button 
-              className={activeButton === "En cours" ? "bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30"
-              : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30"
+              className={activeButton === "En cours" ? "bg-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30"
+              : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30 cursor-pointer"
               }              
               onClick={() => setActiveButton("En cours")}>En cours</button>
-              <button className={activeButton === "En attente" ? "bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-4 py-2 xl:px-7 xl:py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30"
-              : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30"
+              <button className={activeButton === "En attente" ? "bg-[#00DEF5] px-4 py-2 xl:px-7 xl:py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30"
+              : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30 cursor-pointer"
               } onClick={() => setActiveButton("En attente")}>A venir</button>
-              <button className={activeButton === "Terminé" ? "bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-4 py-2 xl:px-7 xl:py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30"
-              : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30"
+              <button className={activeButton === "Terminé" ? "bg-[#00DEF5] px-4 py-2 xl:px-7 xl:py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30"
+              : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30 cursor-pointer"
               }  onClick={() => setActiveButton("Terminé")}>Terminés</button>                 
             </div>
 
