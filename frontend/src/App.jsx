@@ -8,6 +8,7 @@ import Tournaments from './pages/Tournaments.jsx'
 import TournamentDetail from './pages/TournamentDetail.jsx'
 import Loading from './pages/Loading.jsx'
 import Error404 from './pages/Error404.jsx'
+import Register from './pages/Register.jsx'
 
 function App() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Homepage />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route path='/profile/:id' element={<Profile />} />
         <Route path='/tournaments' element={<Tournaments />} />
         <Route path='/tournament/:id' element={<TournamentDetail />} />

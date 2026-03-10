@@ -50,10 +50,16 @@ const Login = () => {
                 value = {password}
                 onChange={(e) => setPassword(e.target.value)}></input>
                 {error && <p className="text-red-500">Mail ou mot de passe incorrect</p>}
-                <button type="submit" className="bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white xl:text-xl font-semibold shadow-lg shadow-black/30 mt-6">Je me connecte !</button>
+                <button type="submit" className="bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white xl:text-xl font-semibold shadow-lg shadow-black/30 mt-6 cursor-pointer">Je me connecte !</button>
             </form>
 
         </div>
+
+        <div className="flex items-center justify-center gap-2 mt-5">
+          <span className="text-white text-lg">Vous n'avez pas de compte ?</span>
+          <button onClick={(() => navigate('/register'))} className="text-[#00DEF5] hover:underline text-lg cursor-pointer">Inscrivez-vous !</button>
+        </div>
+
       </div>
     </div>
   )
