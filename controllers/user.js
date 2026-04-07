@@ -1,243 +1,106 @@
 require('dotenv').config();
-const { prisma } = require('../lib/prisma');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const userService = require('../services/user');
 
-exports.getUserById = async (req, res, next) => {
-
-            try {
-                const user = await prisma.user.findUnique({
-                    where: { id: parseInt(req.params.id) },
-                    include: {
-                        userStatus: true
-                    }
-                });
-                res.status(200).json(user);
-            } catch (error) {
-                res.status(400).json( {error : error.message});
-            }
-};
-
-exports.signup = async (req, res, next) => {
+exports.getUserById = async (req, res) => {
 
     try {
-        const { mail, password, username, birthday, city, userStatus } = req.body;
+        const user = await userService.getUserById(req.params.id);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+};
 
-        const salt = await bcrypt.genSalt(10)
-        const crypted_password = await bcrypt.hash(req.body.password, salt)
+exports.signup = async (req, res) => {
 
-        const verifMail = await prisma.user.findUnique({
-            where: {mail},
-        });
-        if(verifMail) {
-            return res.status(400).json( {error : "Un autre compte possède déjà ce mail"});
-        }
-
-        const verifUsername = await prisma.user.findUnique({
-            where: {username},
-        });
-        if(verifUsername) {
-            return res.status(400).json( {error : "Un autre compte possède déjà ce pseudo"});
-        }
-
-        const status = await prisma.userStatus.findFirst({
-            where: { label: userStatus },
-        });
-        if (!status) {
-            return res.status(400).json( {error : "Mauvais statut défini"});
-        }
-
-        const newUser = await prisma.user.create({
-            data: {
-            mail,
-            password: crypted_password,
-            username,
-            birthday: new Date(birthday),
-            city,
-            userStatusId: status.id,
-            createdAt: new Date(),
-            howManyTourn: 0,
-            howManyMatches: 0,
-            wonTournaments: 0,
-            },
-        })
+    try {
+        const { newUser } = await userService.signup(req.body);
 
         const access_token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: '12h' });
+
         res.status(201).json({
-            message: "Utilisateur crée !",
+            message: "Utilisateur créé !",
             id: newUser.id,
             mail: newUser.mail,
             username: newUser.username,
             birthday: newUser.birthday,
             city: newUser.city,
-            userStatusId: status.id,
+            userStatusId: newUser.userStatusId,
             token: access_token
-        })
+        });
     } catch (error) {
-        res.status(400).json( {error : error.message});
+        res.status(400).json({ error: error.message });
     }
-}
+};
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
 
     try {
-        const { mail, password} = req.body;
-
-        const user = await prisma.user.findUnique({
-            where: { mail },
-        });
-        if(!user) {
-            return res.status(400).json( {error : "Utilisateur introuvable."});
-        }
-
-        const ok = await bcrypt.compare(password, user.password);
-        if (!ok) {
-            return res.status(401).json({ error: "Mot de passe incorrect !" });
-        }
+        const user = await userService.login(req.body);
 
         const access_token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '12h' });
 
         res.status(200).json({
             mail: user.mail,
             token: access_token
-        })
+        });
     } catch (error) {
-        res.status(400).json( {error : error.message});
+        res.status(400).json({ error: error.message });
     }
-}
+};
 
-exports.updateUser = async (req, res, next) => {
+exports.updateUser = async (req, res) => {
+
     try {
-        const { id } = req.params;
-        const { mail, password, username, birthday, city, userStatus } = req.body;
+        const { updatedUser } = await userService.updateUser(req.params.id, req.body);
 
-        const salt = await bcrypt.genSalt(10)
-        const crypted_password = await bcrypt.hash(req.body.password, salt)
+        const access_token = jwt.sign({ id: updatedUser.id }, process.env.JWT_SECRET, { expiresIn: '12h' });
 
-        const status = await prisma.userStatus.findUnique({
-            where: { label: userStatus },
-        });
-        if (!status) {
-            return res.status(400).json( {error : "Mauvais statut défini"});
-        }
-
-        const updateUser = await prisma.user.update({
-            where: { id: parseInt(id) },
-            data: {
-                mail,
-                password: crypted_password,
-                username,
-                birthday: new Date(birthday),
-                city,
-                userStatusId: status.id,
-            },
-        });
-
-        const access_token = jwt.sign({ id: updateUser.id }, process.env.JWT_SECRET, { expiresIn: '12h' });
         res.status(200).json({
             message: "Utilisateur modifié !",
-            id: updateUser.id,
-            mail: updateUser.mail,
-            username: updateUser.username,
-            birthday: updateUser.birthday,
-            city: updateUser.city,
-            userStatusId: status.id,
+            id: updatedUser.id,
+            mail: updatedUser.mail,
+            username: updatedUser.username,
+            birthday: updatedUser.birthday,
+            city: updatedUser.city,
+            userStatusId: updatedUser.userStatusId,
             token: access_token
         });
-
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
 
-exports.deleteUser = async (req, res, next) => {
+exports.deleteUser = async (req, res) => {
+
     try {
-        const { id } = req.params;
+        await userService.deleteUser(req.params.id);
 
-        const deletedUser = await prisma.user.delete({
-            where: { id: parseInt(id) },
-        });
-
-        res.status(204).json({message: "Utilisateur supprimé !"});
-
+        res.status(204).json({ message: "Utilisateur supprimé !" });
     } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
-
-exports.getUserStatus = async (req, res, next) => {
-    try {
-        const status = await prisma.userStatus.findUnique();
-        res.json(status);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(404).json({ error: error.message });
     }
 };
 
 exports.getUserMatches = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const matches = await prisma.match.findMany({
-            where: {
-                OR: [
-                    {player1Id: parseInt(id)},
-                    {player2Id: parseInt(id)},
-                ],
-            },
-            include: {
-                player1: {
-                    select: { id: true, username: true },
-                },
-                player2: {
-                    select: { id: true, username: true },
-                },
-                winner: {
-                    select: { id: true, username: true },
-                },
-                tournament: {
-                    select: { id: true, name: true },
-                },
-            },
-        });
 
-        res.json(matches);
+    try {
+        const matches = await userService.getUserMatches(req.params.id);
+
+        res.status(200).json(matches);
     } catch (error) {
-        res.status(400).json({ userMatches: error.message });
+        res.status(404).json({ error: error.message });
     }
 };
 
 exports.getUserTournaments = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const tournaments = await prisma.sub.findMany({
-            where: {
-                    userId: parseInt(id),
-            },
-            include: {
-                tournament: {
-                    select: {
-                        name: true,
-                        startedAt: true,
-                        endedAt: true,
-                        game: {
-                            select: { id: true, name: true },
-                        },
-                        winner: {
-                            select: { id: true, username: true },
-                        },
-                        prize: {
-                            select: { id: true, name: true, value: true },
-                        },
-                        tournamentStatus: {
-                            select: { id: true, label: true },
-                        },
-                    },
-                },
-            },
-        });
 
-        res.json(tournaments);
+    try {
+        const tournaments = await userService.getUserTournaments(req.params.id);
+        
+        res.status(200).json(tournaments);
     } catch (error) {
-        res.status(400).json({ useTournaments: error.message });
+        res.status(404).json({ error: error.message });
     }
 };
