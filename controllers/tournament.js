@@ -1,300 +1,101 @@
-const { prisma } = require('../lib/prisma');
+const tournamentService = require('../services/tournament');
 
-exports.getAllTournaments = async (req, res, next) => {
-
-            try {
-                const user = await prisma.tournament.findMany(
-                    {
-                    include: {
-                        tournamentStatus: true,
-                        creator: true,
-                        winner: true,
-                        prize: true,
-                        game: true,
-                        channel:  true
-                    }
-                    }
-                );
-                res.status(200).json(user);
-            } catch (error) {
-                res.status(400).json( {error : error.message});
-            }
-};
-
-exports.getTournamentById = async (req, res, next) => {
-
-            try {
-                const tournament = await prisma.tournament.findUnique({
-                    where: { id: parseInt(req.params.id) },
-                    include: {
-                        tournamentStatus: true,
-                        creator: true,
-                        winner: true,
-                        prize: true,
-                        game: true,
-                        channel:  true
-                    }
-                });
-                res.status(200).json(tournament);
-            } catch (error) {
-                res.status(400).json( {error : error.message});
-            }
-};
-
-exports.createTournament = async (req, res, next) => {
+exports.getAllTournaments = async (req, res) => {
 
     try {
-        const { name, startedAt, endedAt, game, creator, tournamentStatus } = req.body;
-
-        const gameTournament = await prisma.game.findFirst({
-            where: { name: game },
-        });
-        if (!gameTournament) {
-            return res.status(400).json( {game : "Mauvais statut défini"});
-        }
-
-        const creatorTournament = await prisma.user.findFirst({
-            where: { username: creator },
-        });
-        if (!creatorTournament) {
-            return res.status(400).json( {creator : "Mauvais statut défini"});
-        }
-
-        const status = await prisma.tournamentStatus.findFirst({
-            where: { label: tournamentStatus },
-        });
-        if (!status) {
-            return res.status(400).json( {tournamentStatus : "Mauvais statut défini"});
-        }
-
-        const newTournament = await prisma.tournament.create({
-            data: {
-            name,
-            startedAt: new Date(startedAt),
-            endedAt: new Date(endedAt),
-            gameId: gameTournament.id,
-            creatorId: creatorTournament.id,
-            winnerId: null,
-            prizeId: null,
-            tournamentStatusId: status.id,
-            },
-        })
-        res.status(201).json(newTournament)
-    } catch (error) {
-        res.status(400).json( {error : error.message});
-    }
-};
-
-exports.updateTournament = async (req, res, next) => {
-
-    try {
-        const { id } = req.params;
-        const { name, startedAt, endedAt, game, creator, tournamentStatus } = req.body;
-
-        const gameUpdate = await prisma.game.findFirst({
-            where: { name: game },
-        });
-        if (!gameUpdate) {
-            return res.status(400).json( {game : "Mauvais statut défini"});
-        }
-
-        const creatorUpdate = await prisma.user.findFirst({
-            where: { username: creator },
-        });
-        if (!creatorUpdate) {
-            return res.status(400).json( {creator : "Mauvais statut défini"});
-        }
-
-        const statusUpdate = await prisma.tournamentStatus.findFirst({
-            where: { label: tournamentStatus },
-        });
-        if (!statusUpdate) {
-            return res.status(400).json( {tournamentStatus : "Mauvais statut défini"});
-        }
-
-        const updateTournament = await prisma.tournament.update({
-            where: { id: parseInt(id) },
-            data: {
-                name,
-                startedAt: new Date(startedAt),
-                endedAt: new Date(endedAt),
-                gameId: gameUpdate.id,
-                creatorId: creatorUpdate.id,
-                winnerId: null,
-                prizeId: null,
-                tournamentStatusId: statusUpdate.id,
-            },
-        });
-        res.status(200).json(updateTournament)
-    } catch (error) {
-        res.status(400).json( {error : error.message});
-    }
-};
-
-exports.deleteTournament = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-
-        const deletedTournament = await prisma.tournament.delete({
-            where: { id: parseInt(id) },
-        });
-
-        res.status(204).json({message: "Tournoi supprimé !"});
-
+        const tournaments = await tournamentService.getAllTournaments();
+        res.status(200).json(tournaments);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
 
-exports.getAllMatchesFromOneTournament = async (req, res, next) => {
+exports.getTournamentById = async (req, res) => {
+
     try {
-        const { id } = req.params;
-
-        const matches = await prisma.match.findMany({
-            where: {
-                tournamentId: parseInt(id),
-            },
-            include: {
-                player1: {
-                    select: { username: true, mail: true },
-                },
-                player2: {
-                    select: { username: true, mail: true },
-                },
-                winner: {
-                    select: { username: true },
-                },
-                channel: {
-                    select: { label: true },
-                },
-                matchStatus: {
-                    select: { label: true },
-                },
-                roundMatch: {
-                    select: { id: true, label: true },
-                },
-            },
-        });
-
-        res.json(matches);
+        const tournament = await tournamentService.getTournamentById(req.params.id);
+        res.status(200).json(tournament);
     } catch (error) {
-        res.status(500).json({ usersFromTournament: error.message });
+        res.status(404).json({ error: error.message });
     }
 };
 
-exports.getAllUsersFromOneTournament = async (req, res, next) => {
+exports.createTournament = async (req, res) => {
+
     try {
-        const { id } = req.params;
-
-        const subscriptions = await prisma.sub.findMany({
-            where: {
-                tournamentId: parseInt(id),
-            },
-            include: {
-                user: {
-                    select: { username: true, mail: true },
-                },
-            },
-        });
-
-        res.json(subscriptions);
+        const newTournament = await tournamentService.createTournament(req.body);
+        res.status(201).json(newTournament);
     } catch (error) {
-        res.status(500).json({ usersFromTournament: error.message });
+        res.status(400).json({ error: error.message });
     }
 };
 
-exports.getWinnerFromOneTournament = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const winnerTournament = await prisma.tournament.findUnique({
-            where: {
-                id: parseInt(id),
-            },
-            select: {
-                winner: {
-                    select: { username: true, mail: true },
-                },
-            },
-        });
+exports.updateTournament = async (req, res) => {
 
-        res.json(winnerTournament);
+    try {
+        const updatedTournament = await tournamentService.updateTournament(req.params.id, req.body);
+        res.status(200).json(updatedTournament);
     } catch (error) {
-        res.status(500).json({ winnerTournament: error.message });
+        res.status(400).json({ error: error.message });
     }
 };
 
-exports.subscribeToTournament = async (req, res, next) => {
+exports.deleteTournament = async (req, res) => {
+
     try {
-        const { id } = req.params;
-        const { username } = req.body;
-        const user = await prisma.user.findUnique({
-            where: { username: username },
-        });
-        if (!user) {
-            return res.status(404).json({ error: 'Utilisateur non trouvé' });
-        }
-        const sub = await prisma.sub.findUnique({
-            where: {
-                userId_tournamentId: {
-                    userId: user.id,
-                    tournamentId: parseInt(id),
-                },
-            },
-        });
-        if (sub) {
-            return res.status(409).json({ error: 'L\'utilisateur est déjà inscrit' });
-        }
+        await tournamentService.deleteTournament(req.params.id);
+        res.status(204).json({ message: "Tournoi supprimé !" });
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+};
 
-        const subscription = await prisma.sub.create({
-            data: {
-                userId: user.id,
-                tournamentId: parseInt(id),
-            },
-        });
+exports.getAllMatchesFromOneTournament = async (req, res) => {
 
+    try {
+        const matches = await tournamentService.getAllMatchesFromOneTournament(req.params.id);
+        res.status(200).json(matches);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+};
+
+exports.getAllUsersFromOneTournament = async (req, res) => {
+
+    try {
+        const subscriptions = await tournamentService.getAllUsersFromOneTournament(req.params.id);
+        res.status(200).json(subscriptions);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+};
+
+exports.getWinnerFromOneTournament = async (req, res) => {
+
+    try {
+        const winner = await tournamentService.getWinnerFromOneTournament(req.params.id);
+        res.status(200).json(winner);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+};
+
+exports.subscribeToTournament = async (req, res) => {
+
+    try {
+        const subscription = await tournamentService.subscribeToTournament(req.params.id, req.body);
         res.status(201).json(subscription);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
 
-exports.unsubscribeFromTournament = async (req, res, next) => {
+exports.unsubscribeFromTournament = async (req, res) => {
+    
     try {
-        const { id } = req.params;
-        const { username } = req.body;
-
-        const user = await prisma.user.findUnique({
-            where: { username: username },
-        });
-        if (!user) {
-            return res.status(404).json({ error: 'Utilisateur non trouvé' });
-        }
-
-        const sub = await prisma.sub.findUnique({
-            where: {
-                userId_tournamentId: {
-                    userId: user.id,
-                    tournamentId: parseInt(id),
-                },
-            },
-        });
-        if (!sub) {
-            return res.status(404).json({ error: 'L\'utilisateur n\'est pas inscrit à ce tournoi' });
-        }
-
-        const unsubscribe = await prisma.sub.delete({
-            where: {
-                userId_tournamentId: {
-                    userId: user.id,
-                    tournamentId: parseInt(id),
-                },
-            },
-        });
-
-        res.status(204).json({
-           message: 'Inscription supprimée !',
-        });
+        await tournamentService.unsubscribeFromTournament(req.params.id, req.body);
+        res.status(204).json({ message: "Inscription supprimée !" });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(404).json({ error: error.message });
     }
 };

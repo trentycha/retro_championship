@@ -1,7 +1,5 @@
 const http = require('http');
 const app = require('./app');
-const swaggerJsdoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
