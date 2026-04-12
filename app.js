@@ -1,7 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const swaggerUi = require('swagger-ui-express');
-const swaggerFile = require('./swagger-output.json');
 
 const app = express();
 
@@ -20,8 +18,6 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json())
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use("/api/user", userRoutes);
 app.use("/api/tournament", tournamentRoutes);
