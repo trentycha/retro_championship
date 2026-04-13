@@ -1,5 +1,6 @@
 const { prisma } = require('../lib/prisma');
 const bcrypt = require('bcrypt');
+const { signupSchema, loginSchema, updateUserSchema } = require('../validators/user');
 
 exports.getUserById = async (id) => {
 
@@ -16,6 +17,8 @@ exports.getUserById = async (id) => {
 };
 
 exports.signup = async ({ mail, password, username, birthday, city, userStatus }) => {
+
+    signupSchema.parse({ mail, password, username, birthday, city, userStatus });
 
     const checkMail = await prisma.user.findUnique({
         where: { mail },
@@ -62,6 +65,8 @@ exports.signup = async ({ mail, password, username, birthday, city, userStatus }
 
 exports.login = async ({ mail, password }) => {
 
+    loginSchema.parse({ mail, password });
+
     const user = await prisma.user.findUnique({
         where: { mail },
     });
@@ -79,6 +84,8 @@ exports.login = async ({ mail, password }) => {
 };
 
 exports.updateUser = async (id, { mail, password, username, birthday, city, userStatus }) => {
+
+    updateUserSchema.parse({ mail, password, username, birthday, city, userStatus });updateUserSchema.parse({ mail, password, username, birthday, city, userStatus });
 
     const checkStatus = await prisma.userStatus.findFirst({
         where: { label: userStatus },

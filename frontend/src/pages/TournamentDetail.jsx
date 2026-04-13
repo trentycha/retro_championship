@@ -12,12 +12,12 @@ const TournamentDetail = () => {
     useEffect(() => {
         const fetchTournament = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/tournament/${id}`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tournament/${id}`);
                 const data = await response.json();
                 setTournament(data);
                 setLoading(false);
             } catch (error) {
-                {error.message}
+                console.error(error.message);
             }
         };
 
@@ -27,7 +27,7 @@ const TournamentDetail = () => {
     useEffect(() => {
         const fetchMatches = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/tournament/${id}/matches`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tournament/${id}/matches`);
                 const dataMatches = await response.json();
 
                  const roundIds = dataMatches.map((m) => m.roundMatch?.id)
@@ -81,7 +81,7 @@ const TournamentDetail = () => {
                 <p className="text-white">Trophée</p>
                 <p className="text-[#F9FF00] font-pixeloid-bold text-xl">{tournament.prize?.value}€</p>
                 <p className="text-white pt-5">Gagnant</p>
-                {tournament.winner ? <p className="text-[#F9FF00] font-pixeloid-bold text-xl">{tournament.winner?.name}</p>
+                {tournament.winner ? <p className="text-[#F9FF00] font-pixeloid-bold text-xl">{tournament.winner?.username}</p>
                 : <p className="text-[#F9FF00] font-pixeloid-bold text-xl">Indéfini</p>
                 }
                 

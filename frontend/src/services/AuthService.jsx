@@ -25,7 +25,7 @@ const AuthService = {
     },
 
     async login(mail, password) {
-        const response = await fetch('http://localhost:3000/api/user/login', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
@@ -42,7 +42,7 @@ const AuthService = {
     const tokenPayload = JSON.parse(atob(data.token.split('.')[1]));
     const userId = tokenPayload.id;
 
-    const userResponse = await fetch(`http://localhost:3000/api/user/${userId}`, {
+    const userResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/user/${userId}`, {
         headers : {
             'Authorization' : `Bearer ${data.token}`,
         }
@@ -56,7 +56,7 @@ const AuthService = {
     },
 
     async register(userData) {
-        const response = await fetch('http://localhost:3000/api/user/register', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/register`, {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
@@ -78,7 +78,7 @@ const AuthService = {
         const tokenPayload = JSON.parse(atob(data.token.split('.')[1]));
         const userId = tokenPayload.id;
 
-        const userResponse = await fetch(`http://localhost:3000/api/user/${userId}`, {
+        const userResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/user/${userId}`, {
             headers : {
                 'Authorization' : `Bearer ${data.token}`,
             }
