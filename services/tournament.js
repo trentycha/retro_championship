@@ -1,4 +1,5 @@
 const { prisma } = require('../lib/prisma');
+const { createTournamentSchema, updateTournamentSchema, subscribeSchema } = require('../validators/tournament');
 
 exports.getAllTournaments = async () => {
 
@@ -38,6 +39,8 @@ exports.getTournamentById = async (id) => {
 };
 
 exports.createTournament = async ({ name, startedAt, endedAt, game, creator, tournamentStatus }) => {
+
+    createTournamentSchema.parse({ name, startedAt, endedAt, game, creator, tournamentStatus });
 
     const checkName = await prisma.tournament.findUnique({
         where: { name },
@@ -88,6 +91,8 @@ exports.createTournament = async ({ name, startedAt, endedAt, game, creator, tou
 };
 
 exports.updateTournament = async (id, { name, startedAt, endedAt, game, creator, tournamentStatus }) => {
+
+    updateTournamentSchema.parse({ name, startedAt, endedAt, game, creator, tournamentStatus });
 
     const existingTournament = await prisma.tournament.findUnique({
         where: { id: parseInt(id) },
@@ -244,6 +249,8 @@ exports.getWinnerFromOneTournament = async (id) => {
 
 exports.subscribeToTournament = async (id, { username }) => {
 
+    subscribeSchema.parse({ username });
+
     const tournament = await prisma.tournament.findUnique({
         where: { id: parseInt(id) },
     });
@@ -284,6 +291,8 @@ exports.subscribeToTournament = async (id, { username }) => {
 };
 
 exports.unsubscribeFromTournament = async (id, { username }) => {
+
+    subscribeSchema.parse({ username });
 
     const tournament = await prisma.tournament.findUnique({
         where: { id: parseInt(id) },
