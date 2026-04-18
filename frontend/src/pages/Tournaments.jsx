@@ -39,7 +39,7 @@ const Tournaments = () => {
 
             <div className="flex pt-8 pl-5 xl:pl-0 xl:pt-10 pb-5 xl:pb-5 gap-3 xl:gap-5">
               <button 
-              className={activeButton === "En cours" ? "bg-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30"
+              className={activeButton === "En cours" ? "bg-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30"
               : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30 cursor-pointer"
               }              
               onClick={() => setActiveButton("En cours")}>En cours</button>
@@ -56,7 +56,8 @@ const Tournaments = () => {
                 <p className="text-white pl-8 pt-15">Aucun tournoi pour le moment</p>
                 : 
                 filteredCards.map(c => (
-                        <TournamentsCard key={c.id} id={c.id} image={c.imageIcon} name={c.name} start={c.startedAt} end={c.endedAt} status={c.tournamentStatus?.label} trophy={c.prize?.value} room={c.channel?.label}/>
+                        <TournamentsCard key={c.id} id={c.id} image={c.imageIcon} name={c.name} start={c.startedAt} 
+                        end={c.endedAt} status={c.tournamentStatus?.label} trophy={c.prize?.value} room={c.channel?.label}/>
                     ))
                 }
             </div>

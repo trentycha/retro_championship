@@ -18,3 +18,4 @@ router.delete("/:id", auth, tournamentController.deleteTournament);
 router.delete("/:id/unsubscribe/", auth, tournamentController.unsubscribeFromTournament);
 
 module.exports = router;
+

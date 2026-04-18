@@ -85,7 +85,7 @@ exports.login = async ({ mail, password }) => {
 
 exports.updateUser = async (id, { mail, password, username, birthday, city, userStatus }) => {
 
-    updateUserSchema.parse({ mail, password, username, birthday, city, userStatus });updateUserSchema.parse({ mail, password, username, birthday, city, userStatus });
+    updateUserSchema.parse({ mail, password, username, birthday, city, userStatus });
 
     const checkStatus = await prisma.userStatus.findFirst({
         where: { label: userStatus },

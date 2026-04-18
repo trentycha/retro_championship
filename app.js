@@ -27,3 +27,4 @@ app.use("/api/channel", channelRoutes);
 app.use("/api/game", gameRoutes);
 
 module.exports = app;
+

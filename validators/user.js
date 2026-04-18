@@ -24,3 +24,4 @@ const updateUserSchema = z.object({
 });
 
 module.exports = { signupSchema, loginSchema, updateUserSchema };
+
