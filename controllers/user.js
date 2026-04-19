@@ -15,7 +15,7 @@ exports.getUserById = async (req, res) => {
 exports.signup = async (req, res) => {
 
     try {
-        const { newUser } = await userService.signup(req.body);
+        const newUser = await userService.signup(req.body);
 
         const access_token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: '12h' });
 
