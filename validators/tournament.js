@@ -18,8 +18,4 @@ const updateTournamentSchema = z.object({
     tournamentStatus: z.string().min(1, "Le statut est requis"),
 });
 
-const subscribeSchema = z.object({
-    username: z.string().min(1, "Le nom d'utilisateur est requis"),
-});
-
-module.exports = { createTournamentSchema, updateTournamentSchema, subscribeSchema };
+module.exports = { createTournamentSchema, updateTournamentSchema };

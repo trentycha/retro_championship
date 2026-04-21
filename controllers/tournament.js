@@ -83,19 +83,21 @@ exports.getWinnerFromOneTournament = async (req, res) => {
 exports.subscribeToTournament = async (req, res) => {
 
     try {
-        const subscription = await tournamentService.subscribeToTournament(req.params.id, req.body);
+        const subscription = await tournamentService.subscribeToTournament(req.params.id, req.auth.userId);
         res.status(201).json(subscription);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
+
 };
 
 exports.unsubscribeFromTournament = async (req, res) => {
-    
+
     try {
-        await tournamentService.unsubscribeFromTournament(req.params.id, req.body);
+        await tournamentService.unsubscribeFromTournament(req.params.id, req.auth.userId);
         res.status(204).json({ message: "Inscription supprimée !" });
     } catch (error) {
         res.status(404).json({ error: error.message });
     }
+    
 };

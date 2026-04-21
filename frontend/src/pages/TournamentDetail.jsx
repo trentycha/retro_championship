@@ -1,13 +1,20 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Loading from './Loading.jsx'
-import MatchCard from '../components/MatchCard.jsx'
+import Loading from './Loading.jsx';
+import MatchCard from '../components/MatchCard.jsx';
+import { useAuth } from '../hooks/useAuth';
+import ConfirmSub from '../components/ConfirmSub.jsx';
+import SubStatus from '../components/SubStatus.jsx';
+import AuthService from '../services/AuthService.jsx';
 
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState(null);
     const [loading, setLoading] = useState(true);
     const [rounds, setRounds] = useState([]);
+    const [popUp, setPopUp] = useState(false);
+    const [status, setStatus] = useState(null);
     const {id} = useParams();
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
         const fetchTournament = async () => {
@@ -50,6 +57,24 @@ const TournamentDetail = () => {
         fetchMatches();
     }, [id]);
 
+    const handleConfirm = async () => {
+
+        setPopUp(false);
+
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tournament/${id}/subscribe`, {
+                method: "POST",
+                headers: AuthService.isAuthHeaders(),
+            });
+
+            const data = await response.json();
+
+            setStatus({ ok: response.ok, data });
+        } catch (error) {
+            setStatus({ ok: false });
+        }
+    };
+
     if(loading) {
         return <Loading />
     }
@@ -76,6 +101,7 @@ const TournamentDetail = () => {
                     </div>
                 </div>
             </div>
+            
             <div className="w-px bg-[#4b4b4b] self-stretch"></div>
             <div className="pl-5 pr-40">
                 <p className="text-white">Trophée</p>
@@ -88,7 +114,11 @@ const TournamentDetail = () => {
             </div>
             <div className="w-px bg-[#4b4b4b] self-stretch"></div>
             <div>
-                <button className="bg-[#c0c700] hover:bg-white hover:text-[#c0c700] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 cursor-pointer">Je m'inscris !</button>
+                <button onClick={() => setPopUp(true)} disabled={!isAuthenticated}
+                    className={isAuthenticated ? "bg-[#c0c700] hover:bg-white hover:text-[#c0c700] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 cursor-pointer"
+                    : "bg-[#5a5a00] px-7 py-4 rounded-lg text-gray-400 text-lg font-semibold shadow-lg shadow-black/30 mt-6 cursor-not-allowed opacity-50"}>
+                    Je m'inscris !
+                </button>
                 <button className="bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 ml-4 cursor-pointer">Je regarde !</button>
             </div>
           </div>
@@ -111,6 +141,10 @@ const TournamentDetail = () => {
         </div>
         
         </div>
+
+        {popUp && (<ConfirmSub tournament={tournament} onClose={() => setPopUp(false)} onConfirm={handleConfirm}/>)}
+        {status && (<SubStatus status={status} onClose={() => setStatus(null)}/>)}
+
     </div>
   )
 }

@@ -1,5 +1,5 @@
 const { prisma } = require('../lib/prisma');
-const { createTournamentSchema, updateTournamentSchema, subscribeSchema } = require('../validators/tournament');
+const { createTournamentSchema, updateTournamentSchema } = require('../validators/tournament');
 
 exports.getAllTournaments = async () => {
 
@@ -247,9 +247,7 @@ exports.getWinnerFromOneTournament = async (id) => {
     return winner;
 };
 
-exports.subscribeToTournament = async (id, { username }) => {
-
-    subscribeSchema.parse({ username });
+exports.subscribeToTournament = async (id, userId) => {
 
     const tournament = await prisma.tournament.findUnique({
         where: { id: parseInt(id) },
@@ -259,18 +257,10 @@ exports.subscribeToTournament = async (id, { username }) => {
         throw new Error("Tournoi introuvable.");
     }
 
-    const user = await prisma.user.findUnique({
-        where: { username },
-    });
-
-    if (!user) {
-        throw new Error("Utilisateur introuvable.");
-    }
-
     const existingSub = await prisma.sub.findUnique({
         where: {
             userId_tournamentId: {
-                userId: user.id,
+                userId,
                 tournamentId: parseInt(id),
             },
         },
@@ -282,7 +272,7 @@ exports.subscribeToTournament = async (id, { username }) => {
 
     const subscription = await prisma.sub.create({
         data: {
-            userId: user.id,
+            userId,
             tournamentId: parseInt(id),
         },
     });
@@ -290,9 +280,7 @@ exports.subscribeToTournament = async (id, { username }) => {
     return subscription;
 };
 
-exports.unsubscribeFromTournament = async (id, { username }) => {
-
-    subscribeSchema.parse({ username });
+exports.unsubscribeFromTournament = async (id, userId) => {
 
     const tournament = await prisma.tournament.findUnique({
         where: { id: parseInt(id) },
@@ -302,23 +290,15 @@ exports.unsubscribeFromTournament = async (id, { username }) => {
         throw new Error("Tournoi introuvable.");
     }
 
-    const user = await prisma.user.findUnique({
-        where: { username },
-    });
-
-    if (!user) {
-        throw new Error("Utilisateur introuvable.");
-    }
-
     const existingSub = await prisma.sub.findUnique({
         where: {
             userId_tournamentId: {
-                userId: user.id,
+                userId,
                 tournamentId: parseInt(id),
             },
         },
     });
-    
+
     if (!existingSub) {
         throw new Error("L'utilisateur n'est pas inscrit à ce tournoi.");
     }
@@ -326,7 +306,7 @@ exports.unsubscribeFromTournament = async (id, { username }) => {
     await prisma.sub.delete({
         where: {
             userId_tournamentId: {
-                userId: user.id,
+                userId,
                 tournamentId: parseInt(id),
             },
         },
