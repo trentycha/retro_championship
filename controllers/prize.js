@@ -15,21 +15,14 @@ exports.getPrizeById = async (req, res, next) => {
 exports.createPrize = async (req, res, next) => {
 
     try {
-        const { name, description, value, user } = req.body;
-
-        const creatorPrize = await prisma.user.findFirst({
-            where: { username: user },
-        });
-        if (!creatorPrize) {
-            return res.status(400).json( {admin : "Pas d'admin trouvé"});
-        }
+        const { name, description, value } = req.body;
 
         const newPrize = await prisma.prize.create({
             data: {
-            name,
-            description,
-            value,
-            userId: creatorPrize.id,
+                name,
+                description,
+                value,
+                userId: req.auth.userId,
             },
         })
         res.status(201).json(newPrize)

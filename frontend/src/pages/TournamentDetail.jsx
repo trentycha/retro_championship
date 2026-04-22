@@ -84,7 +84,7 @@ const TournamentDetail = () => {
         <div className="px-40 pb-20">
       
         <div className="relative">
-          <img src='/images/pacman.jpg' alt="homepage" className="w-500 rounded-xl opacity-50"/>
+          <img src={tournament.imageDetails || '/images/pacman.jpg'} alt="homepage" className="w-500 rounded-xl opacity-50"/>
 
           <div className="absolute left-17 top-44 bg-[#343434] rounded-2xl shadow-xl shadow-black/30 flex items-start gap-6 px-10 py-10">
             <div>
@@ -103,24 +103,25 @@ const TournamentDetail = () => {
             </div>
             
             <div className="w-px bg-[#4b4b4b] self-stretch"></div>
-            <div className="pl-5 pr-40">
-                <p className="text-white">Trophée</p>
-                <p className="text-[#F9FF00] font-pixeloid-bold text-xl">{tournament.prize?.value}€</p>
-                <p className="text-white pt-5">Gagnant</p>
-                {tournament.winner ? <p className="text-[#F9FF00] font-pixeloid-bold text-xl">{tournament.winner?.username}</p>
-                : <p className="text-[#F9FF00] font-pixeloid-bold text-xl">Indéfini</p>
-                }
-                
-            </div>
+                <div className="pl-5 pr-40">
+                    
+                    <p className="text-white">Trophée</p>
+                    <p className="text-[#F9FF00] font-pixeloid-bold text-xl">{tournament.prize?.value}€</p>
+                    <p className="text-white pt-5">Gagnant</p>
+                    {tournament.winner ? <p className="text-[#F9FF00] font-pixeloid-bold text-xl">{tournament.winner?.username}</p>
+                    : <p className="text-[#F9FF00] font-pixeloid-bold text-xl">Indéfini</p>
+                    }
+                    
+                </div>
             <div className="w-px bg-[#4b4b4b] self-stretch"></div>
-            <div>
-                <button onClick={() => setPopUp(true)} disabled={!isAuthenticated}
-                    className={isAuthenticated ? "bg-[#c0c700] hover:bg-white hover:text-[#c0c700] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 cursor-pointer"
-                    : "bg-[#5a5a00] px-7 py-4 rounded-lg text-gray-400 text-lg font-semibold shadow-lg shadow-black/30 mt-6 cursor-not-allowed opacity-50"}>
-                    Je m'inscris !
-                </button>
-                <button className="bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 ml-4 cursor-pointer">Je regarde !</button>
-            </div>
+                <div>
+                    <button onClick={() => setPopUp(true)} disabled={!isAuthenticated}
+                        className={isAuthenticated ? "bg-[#c0c700] hover:bg-white hover:text-[#c0c700] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 cursor-pointer"
+                        : "bg-[#5a5a00] px-7 py-4 rounded-lg text-gray-400 text-lg font-semibold shadow-lg shadow-black/30 mt-6 cursor-not-allowed opacity-50"}>
+                        Je m'inscris !
+                    </button>
+                    <button className="bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 ml-4 cursor-pointer">Je regarde !</button>
+                </div>
           </div>
 
         </div>

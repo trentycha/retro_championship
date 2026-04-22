@@ -9,11 +9,14 @@ import TournamentDetail from './pages/TournamentDetail.jsx'
 import Loading from './pages/Loading.jsx'
 import Error404 from './pages/Error404.jsx'
 import Register from './pages/Register.jsx'
+import { useAuth } from './hooks/useAuth';
+import CreateTournament from './pages/CreateTournament.jsx';
 
 function App() {
   const location = useLocation();
 
   const hide = ['/loading'].includes(location.pathname);
+  const { user } = useAuth();
 
   return (
     <>
@@ -27,6 +30,9 @@ function App() {
         <Route path='/tournament/:id' element={<TournamentDetail />} />
         <Route path='/loading' element={<Loading />} />
         <Route path='*' element={<Error404 />} />
+        {user?.userStatus?.label === "Admin" && (
+            <Route path="/tournament/create" element={<CreateTournament />} />
+        )}
       </Routes>
       {!hide && <Footer />}
     </>

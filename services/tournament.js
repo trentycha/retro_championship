@@ -38,9 +38,9 @@ exports.getTournamentById = async (id) => {
     return tournament;
 };
 
-exports.createTournament = async ({ name, startedAt, endedAt, game, creator, tournamentStatus }) => {
+exports.createTournament = async ({ name, startedAt, endedAt, game, creator, tournamentStatus, prizeId, channelId }) => {
 
-    createTournamentSchema.parse({ name, startedAt, endedAt, game, creator, tournamentStatus });
+    createTournamentSchema.parse({ name, startedAt, endedAt, game, creator, tournamentStatus});
 
     const checkName = await prisma.tournament.findUnique({
         where: { name },
@@ -82,8 +82,9 @@ exports.createTournament = async ({ name, startedAt, endedAt, game, creator, tou
             gameId: checkGame.id,
             creatorId: checkCreator.id,
             winnerId: null,
-            prizeId: null,
+            prizeId: prizeId,
             tournamentStatusId: checkStatus.id,
+            channelId: channelId,
         },
     });
 

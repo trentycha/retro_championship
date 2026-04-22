@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import TournamentsCard from '../components/TournamentsCard.jsx'
-import Loading from './Loading.jsx'
+import Loading from './Loading.jsx';
+import { useAuth } from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Tournaments = () => {
     const [cards, setCards] = useState([]);
     const [activeButton, setActiveButton] = useState("En cours");
     const [loading, setLoading] = useState(true);
+    const { user } = useAuth();
+    const navigate = useNavigate();
     
       useEffect(() => {
         const fetchThreeCards = async () => {
@@ -37,9 +41,9 @@ const Tournaments = () => {
                 <h4 className='text-[#F9FF00] font-pixeloid-bold text-2xl xl:text-4xl'>Tous les tournois</h4>
             </div>
 
-            <div className="flex pt-8 pl-5 xl:pl-0 xl:pt-10 pb-5 xl:pb-5 gap-3 xl:gap-5">
+            <div className="flex pt-8 pl-5 xl:pl-0 xl:pt-10 pb-5 xl:pb-5 gap-3 xl:gap-5 w-full">
               <button 
-              className={activeButton === "En cours" ? "bg-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30"
+              className={activeButton === "En cours" ? "bg-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30"
               : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30 cursor-pointer"
               }              
               onClick={() => setActiveButton("En cours")}>En cours</button>
@@ -49,6 +53,12 @@ const Tournaments = () => {
               <button className={activeButton === "Terminé" ? "bg-[#00DEF5] px-4 py-2 xl:px-7 xl:py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30"
               : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30 cursor-pointer"
               }  onClick={() => setActiveButton("Terminé")}>Terminés</button>                 
+            
+              {user?.userStatus?.label === "Admin" && (<button onClick={() => navigate('/tournament/create')}
+                      className="bg-[#c0c700] hover:bg-white hover:text-[#c0c700] px-5 py-3 xl:px-7 xl:py-4 rounded-lg text-white xl:text-lg font-semibold shadow-lg shadow-black/30 cursor-pointer ml-auto">
+                      Créer un tournoi </button>
+              )}
+
             </div>
 
             <div>
