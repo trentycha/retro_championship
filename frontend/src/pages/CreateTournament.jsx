@@ -74,7 +74,6 @@ const CreateTournament = () => {
             });
         
             const data = await response.json();
-            console.log(data)
             navigate(`/tournament/${data.id}`);
         } catch (error) {
             console.error(error.message);
