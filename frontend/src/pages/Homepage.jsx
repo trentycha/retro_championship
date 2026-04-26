@@ -26,7 +26,7 @@ const Homepage = () => {
   useEffect(() => {
     const fetchThreeCards = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tournament`);
+        const response = await fetch(`http://localhost:3000/api/tournament`);
         const data = await response.json();
         setCards(data);
         setLoading(false);

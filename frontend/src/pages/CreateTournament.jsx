@@ -22,7 +22,7 @@ const CreateTournament = () => {
 
         const fetchGames = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/game`);
+                const response = await fetch(`http://localhost:3000/api/game`);
                 const data = await response.json();
                 setGames(data);
             } catch (error) {
@@ -32,7 +32,7 @@ const CreateTournament = () => {
 
         const fetchChannels = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/channel`);
+                const response = await fetch(`http://localhost:3000/api/channel`);
                 const data = await response.json();
                 setChannels(data);
             } catch (error) {
@@ -46,7 +46,7 @@ const CreateTournament = () => {
 
     const handleSubmit = async () => {
         try {
-            const prizeResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/prize`, {
+            const prizeResponse = await fetch(`http://localhost:3000/api/prize`, {
                 method: "POST",
                 headers: AuthService.isAuthHeaders(),
                 body: JSON.stringify({
@@ -58,7 +58,7 @@ const CreateTournament = () => {
             const prizeData = await prizeResponse.json();
             const prizeId = prizeData.id;
 
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tournament`, {
+            const response = await fetch(`http://localhost:3000/api/tournament`, {
                 method: "POST",
                 headers: AuthService.isAuthHeaders(),
                 body: JSON.stringify({

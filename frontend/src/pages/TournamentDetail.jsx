@@ -19,7 +19,7 @@ const TournamentDetail = () => {
     useEffect(() => {
         const fetchTournament = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tournament/${id}`);
+                const response = await fetch(`http://localhost:3000/api/tournament/${id}`);
                 const data = await response.json();
                 setTournament(data);
                 setLoading(false);
@@ -34,7 +34,7 @@ const TournamentDetail = () => {
     useEffect(() => {
         const fetchMatches = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tournament/${id}/matches`);
+                const response = await fetch(`http://localhost:3000/api/tournament/${id}/matches`);
                 const dataMatches = await response.json();
 
                  const roundIds = dataMatches.map((m) => m.roundMatch?.id)
@@ -62,7 +62,7 @@ const TournamentDetail = () => {
         setPopUp(false);
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tournament/${id}/subscribe`, {
+            const response = await fetch(`http://localhost:3000/api/tournament/${id}/subscribe`, {
                 method: "POST",
                 headers: AuthService.isAuthHeaders(),
             });
