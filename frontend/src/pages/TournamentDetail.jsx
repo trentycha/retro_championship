@@ -13,6 +13,7 @@ const TournamentDetail = () => {
     const [rounds, setRounds] = useState([]);
     const [popUp, setPopUp] = useState(false);
     const [status, setStatus] = useState(null);
+    const [activeRound, setActiveRound] = useState(null);
     const {id} = useParams();
     const { isAuthenticated } = useAuth();
 
@@ -48,6 +49,8 @@ const TournamentDetail = () => {
                         matches: dataMatches.filter((m) => m.roundMatch?.id === roundId), //on récupère tous les matchs de ce round
                     }))
                 );
+
+                setActiveRound(roundIds[0]);
 
             } catch (error) {
                 console.error(error.message);
@@ -127,16 +130,23 @@ const TournamentDetail = () => {
         </div>
 
         <div className="mt-30">
-            <div className="flex items-start pb-6">
+            <div className="flex gap-3 px-5 pb-6">
                 {rounds.map((round) => (
-                    <div key={round.roundId} className="flex items-start px-10">
-                        <div className="flex flex-col min-w-[220px]">
-                            <div className="text-gray-400 text-xs mb-4 px-2">{round.label}</div>
-                            <div>
-                                {round.matches.map((match) => <MatchCard key={match.id} match={match} round={round.label}/>)}
-                            </div>
-                        </div>
-                    </div>
+                    <button
+                        key={round.roundId}
+                        onClick={() => setActiveRound(round.roundId)}
+                        className={activeRound === round.roundId
+                            ? "bg-[#00DEF5] px-5 py-3 rounded-lg text-white font-semibold shadow-lg shadow-black/30"
+                            : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 rounded-lg text-white font-semibold shadow-lg shadow-black/30 cursor-pointer"
+                        }>
+                        {round.label}
+                    </button>
+                ))}
+            </div>
+
+            <div className="grid grid-cols-3 gap-5 px-5">
+                {rounds.find(r => r.roundId === activeRound)?.matches.map((match) => (
+                    <MatchCard key={match.id} match={match} round={rounds.find(r => r.roundId === activeRound)?.label} />
                 ))}
             </div>
         </div>
