@@ -101,3 +101,14 @@ exports.unsubscribeFromTournament = async (req, res) => {
     }
     
 };
+
+exports.generateFirstRound = async (req, res) => {
+
+    try {
+        const matches = await tournamentService.generateFirstRound(req.params.id);
+        res.status(201).json(matches);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+    
+};
