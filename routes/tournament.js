@@ -11,6 +11,7 @@ router.get("/:id/winner", tournamentController.getWinnerFromOneTournament);
 
 router.post("/", auth, tournamentController.createTournament);
 router.post("/:id/subscribe", auth, tournamentController.subscribeToTournament);
+router.post("/:id/generate-matches", auth, tournamentController.generateFirstRound);
 
 router.put("/:id", auth, tournamentController.updateTournament);
 

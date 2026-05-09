@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Loading from './Loading.jsx';
 import MatchCard from '../components/MatchCard.jsx';
 import { useAuth } from '../hooks/useAuth';
@@ -15,7 +15,8 @@ const TournamentDetail = () => {
     const [status, setStatus] = useState(null);
     const [activeRound, setActiveRound] = useState(null);
     const {id} = useParams();
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTournament = async () => {
@@ -78,6 +79,43 @@ const TournamentDetail = () => {
         }
     };
 
+    const handleDelete = async () => {
+        try {
+            await fetch(`${import.meta.env.VITE_API_URL}/api/tournament/${id}`, {
+                method: "DELETE",
+                headers: AuthService.isAuthHeaders(),
+            });
+            navigate('/tournaments');
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+    const handleGenerateMatches = async () => {
+
+        try {
+            await fetch(`${import.meta.env.VITE_API_URL}/api/tournament/${id}/generate-matches`, {
+                method: "POST",
+                headers: AuthService.isAuthHeaders(),
+            });
+
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tournament/${id}/matches`);
+            const dataMatches = await response.json();
+            const roundIds = dataMatches.map((m) => m.roundMatch?.id)
+                .filter((v, i, arr) => arr.indexOf(v) === i)
+                .sort((a, b) => a - b);
+            setRounds(roundIds.map((roundId) => ({
+                roundId,
+                label: dataMatches.find((m) => m.roundMatch?.id === roundId)?.roundMatch?.label,
+                matches: dataMatches.filter((m) => m.roundMatch?.id === roundId),
+            })));
+            setActiveRound(roundIds[0]);
+        } catch (error) {
+            console.error(error.message);
+        }
+
+    };
+
     if(loading) {
         return <Loading />
     }
@@ -130,18 +168,27 @@ const TournamentDetail = () => {
         </div>
 
         <div className="mt-30">
-            <div className="flex gap-3 px-5 pb-6">
-                {rounds.map((round) => (
-                    <button
-                        key={round.roundId}
-                        onClick={() => setActiveRound(round.roundId)}
-                        className={activeRound === round.roundId
-                            ? "bg-[#00DEF5] px-5 py-3 rounded-lg text-white font-semibold shadow-lg shadow-black/30"
-                            : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 rounded-lg text-white font-semibold shadow-lg shadow-black/30 cursor-pointer"
-                        }>
-                        {round.label}
+            <div className="flex gap-3 px-5 pb-6 w-full justify-between">
+                <div className="flex gap-3">
+                    {rounds.map((round) => (
+                        <button
+                            key={round.roundId}
+                            onClick={() => setActiveRound(round.roundId)}
+                            className={activeRound === round.roundId
+                                ? "bg-[#00DEF5] px-5 py-3 rounded-lg text-white font-semibold shadow-lg shadow-black/30"
+                                : "bg-[#2f2f2f] hover:bg-white hover:text-[#00DEF5] px-5 py-3 rounded-lg text-white font-semibold shadow-lg shadow-black/30 cursor-pointer"
+                            }>
+                            {round.label}
+                        </button>
+                    ))}
+                </div>
+
+                {user?.id === tournament.creatorId && (
+                    <button onClick={handleDelete}
+                        className="bg-red-700 hover:bg-white hover:text-red-700 px-5 py-3 rounded-lg text-white font-semibold shadow-lg shadow-black/30 cursor-pointer">
+                        Supprimer
                     </button>
-                ))}
+                )}
             </div>
 
             <div className="grid grid-cols-3 gap-5 px-5">

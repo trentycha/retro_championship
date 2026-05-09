@@ -278,6 +278,36 @@ exports.subscribeToTournament = async (id, userId) => {
         },
     });
 
+    const subs = await prisma.sub.findMany({
+        where: { tournamentId: parseInt(id) },
+    });
+
+    if (subs.length % 2 === 0) {
+
+        const lastTwo = subs.slice(-2);
+
+        const round = await prisma.roundMatch.findFirst({
+            where: { label: "Premier tour" },
+        });
+
+        const status = await prisma.matchStatus.findFirst({
+            where: { label: "En attente" },
+        });
+
+        await prisma.match.create({
+            data: {
+                startedAt: tournament.startedAt,
+                endedAt: null,
+                player1Id: lastTwo[0].userId,
+                player2Id: lastTwo[1].userId,
+                tournamentId: parseInt(id),
+                winnerId: null,
+                matchStatusId: status.id,
+                roundMatchId: round.id,
+            },
+        });
+    }
+
     return subscription;
 };
 
@@ -312,4 +342,51 @@ exports.unsubscribeFromTournament = async (id, userId) => {
             },
         },
     });
+};
+
+exports.generateFirstRound = async (id) => {
+
+    const tournamentId = parseInt(id);
+
+    const subs = await prisma.sub.findMany({
+        where: { tournamentId },
+        include: { user: true }
+    });
+
+    if (subs.length < 2) throw new Error("Pas assez de joueurs inscrits.");
+
+    const players = subs.map(s => s.user).sort(() => Math.random() - 0.5);
+
+    const round = await prisma.roundMatch.findFirst({
+        where: { label: "Premier tour" }
+    });
+    if (!round) throw new Error("Round 'Premier tour' introuvable.");
+
+    const status = await prisma.matchStatus.findFirst({
+        where: { label: "En attente" }
+    });
+    if (!status) throw new Error("Statut 'En attente' introuvable.");
+
+    const tournament = await prisma.tournament.findUnique({
+        where: { id: tournamentId }
+    });
+
+    const matches = [];
+    for (let i = 0; i < players.length - 1; i += 2) {
+        const match = await prisma.match.create({
+            data: {
+                startedAt: tournament.startedAt,
+                endedAt: null,
+                player1Id: players[i].id,
+                player2Id: players[i + 1].id,
+                tournamentId,
+                winnerId: null,
+                matchStatusId: status.id,
+                roundMatchId: round.id,
+            }
+        });
+        matches.push(match);
+    }
+
+    return matches;
 };
