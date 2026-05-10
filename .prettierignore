@@ -1,0 +1,9 @@
+node_modules/
+frontend/
+package-lock.json
+swagger-output.json
+*.html
+*.yaml
+*.yml
+*.json
+README.md
