@@ -1,19 +1,17 @@
 const { prisma } = require('../lib/prisma');
 
-exports.getPrizeById = async (req, res, next) => {
-
-            try {
-                const prize = await prisma.prize.findUnique({
-                    where: { id: parseInt(req.params.id) },
-                });
-                res.status(200).json(prize);
-            } catch (error) {
-                res.status(400).json( {error : error.message});
-            }
+exports.getPrizeById = async (req, res) => {
+    try {
+        const prize = await prisma.prize.findUnique({
+            where: { id: parseInt(req.params.id) },
+        });
+        res.status(200).json(prize);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 };
 
-exports.createPrize = async (req, res, next) => {
-
+exports.createPrize = async (req, res) => {
     try {
         const { name, description, value } = req.body;
 
@@ -24,15 +22,14 @@ exports.createPrize = async (req, res, next) => {
                 value,
                 userId: req.auth.userId,
             },
-        })
-        res.status(201).json(newPrize)
+        });
+        res.status(201).json(newPrize);
     } catch (error) {
-        res.status(400).json( {error : error.message});
+        res.status(400).json({ error: error.message });
     }
 };
 
-exports.updatePrize = async (req, res, next) => {
-
+exports.updatePrize = async (req, res) => {
     try {
         const { id } = req.params;
         const { name, description, value, user } = req.body;
@@ -41,25 +38,25 @@ exports.updatePrize = async (req, res, next) => {
             where: { username: user },
         });
         if (!creatorPrize) {
-            return res.status(400).json( {admin : "Pas d'admin trouvé"});
+            return res.status(400).json({ admin: "Pas d'admin trouvé" });
         }
 
         const updatePrize = await prisma.prize.update({
             where: { id: parseInt(id) },
             data: {
-            name,
-            description,
-            value,
-            userId: creatorPrize.id,
+                name,
+                description,
+                value,
+                userId: creatorPrize.id,
             },
-        })
-        res.status(200).json(updatePrize)
+        });
+        res.status(200).json(updatePrize);
     } catch (error) {
-        res.status(400).json( {error : error.message});
+        res.status(400).json({ error: error.message });
     }
 };
 
-exports.deletePrize = async (req, res, next) => {
+exports.deletePrize = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -67,8 +64,7 @@ exports.deletePrize = async (req, res, next) => {
             where: { id: parseInt(id) },
         });
 
-        res.status(204).json({message: "Prix supprimé !"});
-
+        res.status(204).json({ message: 'Prix supprimé !' });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

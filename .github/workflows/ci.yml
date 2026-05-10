@@ -27,3 +27,9 @@ jobs:
 
       - name: Lancement des tests
         run: npm test
+
+      - name: Vérification du linter
+        run: npm run lint
+
+      - name: Vérification du formatage
+        run: npm run format:check
