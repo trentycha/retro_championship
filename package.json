@@ -7,7 +7,12 @@
     "dev": "nodemon index.js",
     "test": "jest",
     "swagger": "node ./swagger.js",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "author": "",
   "license": "ISC",
@@ -29,7 +34,13 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^9.1.7",
     "jest": "^30.3.0",
+    "prettier": "^3.8.3",
     "prisma": "^6.19.1"
   }
 }

@@ -75,7 +75,7 @@ const TournamentDetail = () => {
 
             setStatus({ ok: response.ok, data });
         } catch (error) {
-            setStatus({ ok: false });
+            setStatus(error.message);
         }
     };
 
@@ -89,31 +89,6 @@ const TournamentDetail = () => {
         } catch (error) {
             console.error(error.message);
         }
-    };
-
-    const handleGenerateMatches = async () => {
-
-        try {
-            await fetch(`${import.meta.env.VITE_API_URL}/api/tournament/${id}/generate-matches`, {
-                method: "POST",
-                headers: AuthService.isAuthHeaders(),
-            });
-
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tournament/${id}/matches`);
-            const dataMatches = await response.json();
-            const roundIds = dataMatches.map((m) => m.roundMatch?.id)
-                .filter((v, i, arr) => arr.indexOf(v) === i)
-                .sort((a, b) => a - b);
-            setRounds(roundIds.map((roundId) => ({
-                roundId,
-                label: dataMatches.find((m) => m.roundMatch?.id === roundId)?.roundMatch?.label,
-                matches: dataMatches.filter((m) => m.roundMatch?.id === roundId),
-            })));
-            setActiveRound(roundIds[0]);
-        } catch (error) {
-            console.error(error.message);
-        }
-
     };
 
     if(loading) {

@@ -1,45 +1,61 @@
 const { prisma } = require('../lib/prisma');
 const bcrypt = require('bcrypt');
-const { signupSchema, loginSchema, updateUserSchema } = require('../validators/user');
+const {
+    signupSchema,
+    loginSchema,
+    updateUserSchema,
+} = require('../validators/user');
 
 exports.getUserById = async (id) => {
-
     const user = await prisma.user.findUnique({
         where: { id: parseInt(id) },
-        include: { userStatus: true }
+        include: { userStatus: true },
     });
 
     if (!user) {
-        throw new Error("Utilisateur introuvable.");
+        throw new Error('Utilisateur introuvable.');
     }
 
     return user;
 };
 
-exports.signup = async ({ mail, password, username, birthday, city, userStatus }) => {
-
-    signupSchema.parse({ mail, password, username, birthday, city, userStatus });
+exports.signup = async ({
+    mail,
+    password,
+    username,
+    birthday,
+    city,
+    userStatus,
+}) => {
+    signupSchema.parse({
+        mail,
+        password,
+        username,
+        birthday,
+        city,
+        userStatus,
+    });
 
     const checkMail = await prisma.user.findUnique({
         where: { mail },
     });
 
     if (checkMail) {
-        throw new Error("Un autre compte possède déjà ce mail");
+        throw new Error('Un autre compte possède déjà ce mail');
     }
 
     const checkUsername = await prisma.user.findUnique({
         where: { username },
     });
     if (checkUsername) {
-        throw new Error("Un autre compte possède déjà ce pseudo");
+        throw new Error('Un autre compte possède déjà ce pseudo');
     }
 
     const checkStatus = await prisma.userStatus.findFirst({
         where: { label: userStatus },
     });
     if (!checkStatus) {
-        throw new Error("Mauvais statut défini");
+        throw new Error('Mauvais statut défini');
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -64,7 +80,6 @@ exports.signup = async ({ mail, password, username, birthday, city, userStatus }
 };
 
 exports.login = async ({ mail, password }) => {
-
     loginSchema.parse({ mail, password });
 
     const user = await prisma.user.findUnique({
@@ -72,48 +87,57 @@ exports.login = async ({ mail, password }) => {
     });
 
     if (!user) {
-        throw new Error("Utilisateur introuvable.");
+        throw new Error('Utilisateur introuvable.');
     }
 
     const checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword) {
-        throw new Error("Mot de passe incorrect !");
+        throw new Error('Mot de passe incorrect !');
     }
 
     return user;
 };
 
-exports.updateUser = async (id, { mail, password, username, birthday, city, userStatus }) => {
-
-    updateUserSchema.parse({ mail, password, username, birthday, city, userStatus });
+exports.updateUser = async (
+    id,
+    { mail, password, username, birthday, city, userStatus }
+) => {
+    updateUserSchema.parse({
+        mail,
+        password,
+        username,
+        birthday,
+        city,
+        userStatus,
+    });
 
     const checkStatus = await prisma.userStatus.findFirst({
         where: { label: userStatus },
     });
 
     if (!checkStatus) {
-        throw new Error("Mauvais statut défini");
+        throw new Error('Mauvais statut défini');
     }
 
     const existingUser = await prisma.user.findUnique({
         where: { id: parseInt(id) },
     });
     if (!existingUser) {
-        throw new Error("Utilisateur introuvable.");
+        throw new Error('Utilisateur introuvable.');
     }
 
     const checkMail = await prisma.user.findFirst({
         where: { mail, NOT: { id: parseInt(id) } },
     });
     if (checkMail) {
-        throw new Error("Un autre compte possède déjà ce mail.");
+        throw new Error('Un autre compte possède déjà ce mail.');
     }
 
     const checkUsername = await prisma.user.findFirst({
         where: { username, NOT: { id: parseInt(id) } },
     });
     if (checkUsername) {
-        throw new Error("Un autre compte possède déjà ce pseudo.");
+        throw new Error('Un autre compte possède déjà ce pseudo.');
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -135,35 +159,29 @@ exports.updateUser = async (id, { mail, password, username, birthday, city, user
 };
 
 exports.deleteUser = async (id) => {
-
     const user = await prisma.user.findUnique({
-    where: { id: parseInt(id) },
+        where: { id: parseInt(id) },
     });
     if (!user) {
-        throw new Error("Utilisateur introuvable.");
+        throw new Error('Utilisateur introuvable.');
     }
 
     await prisma.user.delete({
         where: { id: parseInt(id) },
     });
-
 };
 
 exports.getUserMatches = async (id) => {
-
     const user = await prisma.user.findUnique({
         where: { id: parseInt(id) },
     });
     if (!user) {
-        throw new Error("Utilisateur introuvable.");
+        throw new Error('Utilisateur introuvable.');
     }
 
     const matches = await prisma.match.findMany({
         where: {
-            OR: [
-                { player1Id: parseInt(id) },
-                { player2Id: parseInt(id) },
-            ],
+            OR: [{ player1Id: parseInt(id) }, { player2Id: parseInt(id) }],
         },
         include: {
             player1: {
@@ -185,12 +203,11 @@ exports.getUserMatches = async (id) => {
 };
 
 exports.getUserTournaments = async (id) => {
-
     const user = await prisma.user.findUnique({
         where: { id: parseInt(id) },
     });
     if (!user) {
-        throw new Error("Utilisateur introuvable.");
+        throw new Error('Utilisateur introuvable.');
     }
 
     const tournaments = await prisma.sub.findMany({

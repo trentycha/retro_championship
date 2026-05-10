@@ -1,7 +1,6 @@
 const tournamentService = require('../services/tournament');
 
 exports.getAllTournaments = async (req, res) => {
-
     try {
         const tournaments = await tournamentService.getAllTournaments();
         res.status(200).json(tournaments);
@@ -11,9 +10,10 @@ exports.getAllTournaments = async (req, res) => {
 };
 
 exports.getTournamentById = async (req, res) => {
-
     try {
-        const tournament = await tournamentService.getTournamentById(req.params.id);
+        const tournament = await tournamentService.getTournamentById(
+            req.params.id
+        );
         res.status(200).json(tournament);
     } catch (error) {
         res.status(404).json({ error: error.message });
@@ -21,9 +21,10 @@ exports.getTournamentById = async (req, res) => {
 };
 
 exports.createTournament = async (req, res) => {
-
     try {
-        const newTournament = await tournamentService.createTournament(req.body);
+        const newTournament = await tournamentService.createTournament(
+            req.body
+        );
         res.status(201).json(newTournament);
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -31,9 +32,11 @@ exports.createTournament = async (req, res) => {
 };
 
 exports.updateTournament = async (req, res) => {
-
     try {
-        const updatedTournament = await tournamentService.updateTournament(req.params.id, req.body);
+        const updatedTournament = await tournamentService.updateTournament(
+            req.params.id,
+            req.body
+        );
         res.status(200).json(updatedTournament);
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -41,19 +44,19 @@ exports.updateTournament = async (req, res) => {
 };
 
 exports.deleteTournament = async (req, res) => {
-
     try {
         await tournamentService.deleteTournament(req.params.id);
-        res.status(204).json({ message: "Tournoi supprimé !" });
+        res.status(204).json({ message: 'Tournoi supprimé !' });
     } catch (error) {
         res.status(404).json({ error: error.message });
     }
 };
 
 exports.getAllMatchesFromOneTournament = async (req, res) => {
-
     try {
-        const matches = await tournamentService.getAllMatchesFromOneTournament(req.params.id);
+        const matches = await tournamentService.getAllMatchesFromOneTournament(
+            req.params.id
+        );
         res.status(200).json(matches);
     } catch (error) {
         res.status(404).json({ error: error.message });
@@ -61,9 +64,9 @@ exports.getAllMatchesFromOneTournament = async (req, res) => {
 };
 
 exports.getAllUsersFromOneTournament = async (req, res) => {
-
     try {
-        const subscriptions = await tournamentService.getAllUsersFromOneTournament(req.params.id);
+        const subscriptions =
+            await tournamentService.getAllUsersFromOneTournament(req.params.id);
         res.status(200).json(subscriptions);
     } catch (error) {
         res.status(404).json({ error: error.message });
@@ -71,9 +74,10 @@ exports.getAllUsersFromOneTournament = async (req, res) => {
 };
 
 exports.getWinnerFromOneTournament = async (req, res) => {
-
     try {
-        const winner = await tournamentService.getWinnerFromOneTournament(req.params.id);
+        const winner = await tournamentService.getWinnerFromOneTournament(
+            req.params.id
+        );
         res.status(200).json(winner);
     } catch (error) {
         res.status(404).json({ error: error.message });
@@ -81,34 +85,25 @@ exports.getWinnerFromOneTournament = async (req, res) => {
 };
 
 exports.subscribeToTournament = async (req, res) => {
-
     try {
-        const subscription = await tournamentService.subscribeToTournament(req.params.id, req.auth.userId);
+        const subscription = await tournamentService.subscribeToTournament(
+            req.params.id,
+            req.auth.userId
+        );
         res.status(201).json(subscription);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
-
 };
 
 exports.unsubscribeFromTournament = async (req, res) => {
-
     try {
-        await tournamentService.unsubscribeFromTournament(req.params.id, req.auth.userId);
-        res.status(204).json({ message: "Inscription supprimée !" });
+        await tournamentService.unsubscribeFromTournament(
+            req.params.id,
+            req.auth.userId
+        );
+        res.status(204).json({ message: 'Inscription supprimée !' });
     } catch (error) {
         res.status(404).json({ error: error.message });
     }
-    
-};
-
-exports.generateFirstRound = async (req, res) => {
-
-    try {
-        const matches = await tournamentService.generateFirstRound(req.params.id);
-        res.status(201).json(matches);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-    
 };

@@ -66,6 +66,10 @@ const AuthService = {
 
     const data = await response.json();
 
+    if (data.error) {
+        throw new Error(data.error);
+    }
+
     if(data.token) {
         this.setToken(data.token);
     }

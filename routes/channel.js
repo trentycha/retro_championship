@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const channelController = require("../controllers/channel.js");
+const channelController = require('../controllers/channel.js');
 const auth = require('../middlewares/auth');
 
-router.get("/", channelController.getAllChannel);
+router.get('/', channelController.getAllChannel);
 
-router.post("/", auth, channelController.createChannel);
+router.post('/', auth, channelController.createChannel);
 
-router.get("/:id", auth, channelController.getChannelById);
+router.get('/:id', auth, channelController.getChannelById);
 
-router.put("/:id", auth, channelController.updateChannel);
+router.put('/:id', auth, channelController.updateChannel);
 
-router.delete("/:id", auth, channelController.deleteChannel);
+router.delete('/:id', auth, channelController.deleteChannel);
 
 module.exports = router;

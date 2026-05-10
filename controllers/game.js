@@ -1,29 +1,26 @@
 const { prisma } = require('../lib/prisma');
 
-exports.getAllGame = async (req, res, next) => {
-            try {
-                const game = await prisma.game.findMany();
-                res.status(200).json(game);
-            } catch (error) {
-                res.status(400).json( {error : error.message});
-            }
+exports.getAllGame = async (req, res) => {
+    try {
+        const game = await prisma.game.findMany();
+        res.status(200).json(game);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 };
 
-exports.getGameById = async (req, res, next) => {
-
-            try {
-                const game = await prisma.game.findUnique({
-                    where: { id: parseInt(req.params.id) },
-                });
-                res.status(200).json(game);
-            } catch (error) {
-                res.status(400).json( {error : error.message});
-            }
+exports.getGameById = async (req, res) => {
+    try {
+        const game = await prisma.game.findUnique({
+            where: { id: parseInt(req.params.id) },
+        });
+        res.status(200).json(game);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 };
 
-
-exports.createGame = async (req, res, next) => {
-
+exports.createGame = async (req, res) => {
     try {
         const { name, license, typeGame } = req.body;
 
@@ -31,31 +28,30 @@ exports.createGame = async (req, res, next) => {
             where: { name: license },
         });
         if (!licenseGame) {
-            return res.status(400).json( {license : "Pas de licence trouvée"});
+            return res.status(400).json({ license: 'Pas de licence trouvée' });
         }
 
         const type = await prisma.typeGame.findFirst({
             where: { name: typeGame },
         });
         if (!type) {
-            return res.status(400).json( {type : "Pas de type trouvé"});
+            return res.status(400).json({ type: 'Pas de type trouvé' });
         }
 
         const newGame = await prisma.game.create({
             data: {
-            name,
-            licenseId: licenseGame.id,
-            typeGameId: type.id,
+                name,
+                licenseId: licenseGame.id,
+                typeGameId: type.id,
             },
-        })
-        res.status(201).json(newGame)
+        });
+        res.status(201).json(newGame);
     } catch (error) {
-        res.status(400).json( {error : error.message});
+        res.status(400).json({ error: error.message });
     }
 };
 
-exports.updateGame = async (req, res, next) => {
-
+exports.updateGame = async (req, res) => {
     try {
         const { id } = req.params;
         const { name, license, typeGame } = req.body;
@@ -64,31 +60,31 @@ exports.updateGame = async (req, res, next) => {
             where: { name: license },
         });
         if (!licenseGameUpdate) {
-            return res.status(400).json( {license : "Pas de licence trouvée"});
+            return res.status(400).json({ license: 'Pas de licence trouvée' });
         }
 
         const typeUpdate = await prisma.typeGame.findFirst({
             where: { name: typeGame },
         });
         if (!typeUpdate) {
-            return res.status(400).json( {type : "Pas de type trouvé"});
+            return res.status(400).json({ type: 'Pas de type trouvé' });
         }
 
         const updateGame = await prisma.game.update({
             where: { id: parseInt(id) },
             data: {
-            name,
-            licenseId: licenseGameUpdate.id,
-            typeGameId: typeUpdate.id,
+                name,
+                licenseId: licenseGameUpdate.id,
+                typeGameId: typeUpdate.id,
             },
-        })
-        res.status(201).json(updateGame)
+        });
+        res.status(201).json(updateGame);
     } catch (error) {
-        res.status(400).json( {error : error.message});
+        res.status(400).json({ error: error.message });
     }
 };
 
-exports.deleteGame = async (req, res, next) => {
+exports.deleteGame = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -96,8 +92,7 @@ exports.deleteGame = async (req, res, next) => {
             where: { id: parseInt(id) },
         });
 
-        res.status(204).json({message: "Jeu supprimé !"});
-
+        res.status(204).json({ message: 'Jeu supprimé !' });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

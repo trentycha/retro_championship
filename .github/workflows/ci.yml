@@ -27,3 +27,11 @@ jobs:
 
       - name: Lancement des tests
         run: npm test
+
+      - name: Installation des navigateurs Playwright
+        run: npx playwright install --with-deps
+        working-directory: frontend
+
+      - name: Lancement des tests Playwright
+        run: npx playwright test
+        working-directory: frontend
