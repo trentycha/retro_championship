@@ -18,7 +18,11 @@
   "license": "ISC",
   "description": "",
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+        "/node_modules/",
+        "<rootDir>/frontend/"
+    ]
   },
   "dependencies": {
     "@prisma/client": "^6.19.1",
