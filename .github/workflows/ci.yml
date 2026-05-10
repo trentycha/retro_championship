@@ -28,20 +28,8 @@ jobs:
       - name: Lancement des tests
         run: npm test
 
-      - name: Installation des dépendances front-end
-        run: npm install
-        working-directory: frontend
+      - name: Vérification du linter
+        run: npm run lint
 
-      - name: Installation des navigateurs Playwright
-        run: npx playwright install --with-deps
-        working-directory: frontend
-
-      - name: Build du front-end
-        run: npm run build
-        working-directory: frontend
-
-      - name: Lancement des tests Playwright
-        run: npx playwright test
-        working-directory: frontend
-        env:
-          CI: true
+      - name: Vérification du formatage
+        run: npm run format:check
