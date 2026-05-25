@@ -1,83 +1,168 @@
-Website deploy on Vercel : https://retro-championship-7jli.vercel.app/
+# **Retro Championship**
+
+Une plateforme de gestion et de consultation de tournois d'e-sport sur des jeux retro-gaming.
+
+**Démo** : https://retro-championship-7jli.vercel.app
+
+**CI** : https://github.com/trentycha/retro_championship/actions/workflows/ci.yml/badge.svg
 
 
-# To-Do List du Projet
 
-## Back-end
+## **Présentation**
 
-| Étape | Tâche | Statut |
-|-------|-------|--------|
-| **1. Lancement du projet** | | |
-| | Lancement du projet : création de la base de données (entités, relations, …) en MySQL | ✅ Terminé |
-| | Création des endpoints | ✅ Terminé |
-| **2. Configuration initiale** | | |
-| | Créer et initialiser le projet | ✅ Terminé |
-| | Installation de Prisma | ✅ Terminé |
-| | Création du schéma et première migration de la base de données | ✅ Terminé |
-| | Mise en place de l'architecture des routes | ✅ Terminé |
-| | Tests de routes avec Postman | ✅ Terminé |
-| **3. Routes Utilisateurs** | | |
-| | Création des routes Utilisateurs : middlewares, routes et controller | ✅ Terminé |
-| | Tests des routes Utilisateurs sur Postman | ✅ Terminé |
-| | Gestion des autorisations : cryptage de mot de passe, tokens et routes | ✅ Terminé |
-| | Gestion des autorisations de rôles : spectateur, joueur, admin | À faire |
-| | Incrémenter les statistiques à chaque participation de tournoi, match et tournoi gagné | À faire |
-| **4. Routes Tournois** | | |
-| | Création des routes Tournois : middlewares, routes et controller | ✅ Terminé |
-| | Tests des routes Tournois sur Postman | ✅ Terminé |
-| **5. Routes Matchs** | | |
-| | Création des routes Matchs : middlewares, routes et controller | ✅ Terminé |
-| | Tests des routes Matchs sur Postman | ✅ Terminé |
-| **6. Routes Prix** | | |
-| | Création des routes Prix : middlewares, routes et controller | ✅ Terminé |
-| | Tests des routes Prix sur Postman | ✅ Terminé |
-| **7. Routes Chaînes** | | |
-| | Création des routes Chaînes : middlewares, routes et controller | ✅ Terminé |
-| | Tests des routes Chaînes sur Postman | ✅ Terminé |
-| **8. Routes Jeux** | | |
-| | Création des routes Jeux : middlewares, routes et controller | ✅ Terminé |
-| | Tests des routes Jeux sur Postman | ✅ Terminé |
-| **9. Documentation Swagger** | | |
-| | Tests des routes avec Swagger | ✅ Terminé |
-| | Installation du package Swagger | En cours |
-| **10. Ajout de la gestion de document** | | |
-| | Configurer Multer | À faire |
-| **11. Renforcer la sécurité** | | |
-| | Installer des packages pour renforcer la sécurité | À faire |
-| **12. Tests automatisés** | | |
-| | Tests unitaires avec Jest | À faire |
-| | Tests d'intégration des routes | À faire |
+Retro Championship est une plateforme de gestion et de consultation de tournois d'e-sport sur des jeux rétro (Pac-Man, Tetris, Mario, Pong...). Elle permet aux utilisateurs de créer un compte, de se connecter et de gérer leur profil. Ils peuvent consulter la liste des tournois disponibles, accéder au détail d'un tournoi et s'y inscrire ou se désinscrire. Les admins peuvent créer des tournois ou en supprimer. Lorsque deux joueurs s'inscrivent à un même tournoi, un match est automatiquement généré. L'application est entièrement responsive et disponible sur mobile.
+
+
+## **Stack technique**
+
+**Back-end**
+- Node.js / Express
+- Prisma ORM
+- MySQL
+- JWT (authentification)
+- Zod (validation)
+- Jest (tests unitaires)
+
+**Front-end**
+- React / Vite
+- Tailwind CSS
+- React Router
+- Playwright (tests E2E)
+
+**DevOps**
+- Docker
+- GitHub Actions
+- VPS Debian / Caddy / PM2 (déploiement)
+- ESLint / Prettier / Husky
+- Webhook GitHub
+
+
+
+## **Prérequis**
+
+- Node.js >= 22
+- MySQL
+- Docker
+
+
+
+## **Installation et lancement**
+
+### **Back-end**
+
+**1. Cloner le dépôt :**
+
+*git clone https://github.com/trentycha/retro_championship.git
+cd retro_championship*
+
+
+**2. Installer les dépendances :**
+
+*npm install*
+
+
+**3. Créer un fichier `.env` à la racine :**
+
+*DATABASE_URL="mysql://utilisateur:motdepasse@localhost:3306/retro_championship"
+JWT_SECRET="votre_secret_jwt"*
+
+
+**4. Lancer les migrations Prisma :**
+
+*npx prisma migrate dev*
+
+
+**5. Démarrer le serveur :**
+
+*npm run dev*
 
 ---
+**Le serveur tourne sur `http://localhost:3000`**
 
-## Front-end
+### **Front-end**
 
-| Étape | Tâche | Statut |
-|-------|-------|--------|
-| **1. Design** | | |
-| | Création de la maquette sur Figma | ✅ Terminé |
-| **2. Initialisation** | | |
-| | Initialisation du projet React | ✅ Terminé |
-| | Configuration de App.jsx et de index.jsx | ✅ Terminé |
-| **3. Composants globaux** | | |
-| | Création du Header | ✅ Terminé |
-| | Création du Footer | ✅ Terminé |
-| **4. Homepage** | | |
-| | Création de la Homepage | ✅ Terminé |
-| | Création des composants cartes de la Homepage | ✅ Terminé |
-| | Ajouter des animations | En cours |
-| **5. Authentification** | | |
-| | Création de la page de connexion | ✅ Terminé |
-| | Configuration du service de connexion et du useContext | ✅ Terminé |
-| | Ajouter le bouton logout et géré les boutons du header en fonction de la connexion | ✅ Terminé |
-| | Gestion des autorisations sur la page profil | ✅ Terminé |
-| **6. Tournois** | | |
-| | Création de la page des tournois | ✅ Terminé |
-| | Création d'une page de tournoi | À faire |
-| **7. Utilisateur** | | |
-| | Création du profil utilisateur | ✅ Terminé |
-| **8. Responsive** | | |
-| | Version mobile | À faire |
-| **9. Erreur et loading** | | |
-| | Erreur 404 | ✅ Terminé |
-| | Loading | ✅ Terminé |
+**1. Aller dans le dossier frontend :**
+
+*cd frontend*
+
+
+**2. Installer les dépendances :**
+
+*npm install*
+
+
+**3. Créer un fichier `.env` dans le dossier `frontend/` :**
+
+*VITE_API_URL=http://localhost:3000*
+
+
+**4. Démarrer l'application :**
+
+*npm run dev*
+
+---
+**L'application tourne sur `http://localhost:5173`**
+
+### **Avec Docker**
+
+*docker compose up --build*
+
+
+##  **Tests**
+
+### **Tests unitaires (Jest)**
+
+*npm test*
+
+
+### **Tests E2E (Playwright)**
+
+
+*cd frontend
+npx playwright test*
+
+
+
+
+## **Qualité de code**
+
+### **Linter**
+
+
+*npm run lint*
+
+
+### **Formatage**
+
+
+*npm run format:check*
+
+
+
+
+
+## **Structure du projet**
+retro_championship/
+├── controllers/
+├── services/
+├── routes/
+├── middlewares/
+├── validators/
+├── prisma/
+├── tests/
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── context/
+│   │   ├── hooks/
+│   │   └── services/
+│   └── tests-e2e/
+├── .github/workflows/
+└── docker-tools/ 
+
+
+
+## **Auteure**
+
+**Charlene Billat** — https://github.com/trentycha
