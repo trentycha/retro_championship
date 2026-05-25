@@ -37,3 +37,4 @@ test('inscription avec un mail déjà existant', async ({ page }) => {
     await expect(page.locator('p.text-red-500')).toContainText('Un autre compte possède déjà ce mail');
 
 });
+
