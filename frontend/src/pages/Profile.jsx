@@ -83,7 +83,7 @@ const Profile = () => {
 
                             {isOwner ?
                                 <div className="flex justify-end">
-                                    <button onClick={(() => handleDelete(user.id))} className="bg-[#edf500] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6">Supprimer</button>
+                                    <button onClick={(() => handleDelete(user.id))} className="bg-[#c0c700] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6">Supprimer</button>
                                     <button className="bg-[#00DEF5] hover:bg-white hover:text-[#00DEF5] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 ml-4">Modifier</button>
                                 </div>
                             : null}
