@@ -32,6 +32,9 @@ exports.signup = async (req, res) => {
             token: access_token,
         });
     } catch (error) {
+        if (error.issues) {
+            return res.status(400).json({ error: error.issues[0].message });
+        }
         res.status(400).json({ error: error.message });
     }
 };
@@ -49,6 +52,9 @@ exports.login = async (req, res) => {
             token: access_token,
         });
     } catch (error) {
+        if (error.issues) {
+            return res.status(400).json({ error: error.issues[0].message });
+        }
         res.status(400).json({ error: error.message });
     }
 };
@@ -77,6 +83,9 @@ exports.updateUser = async (req, res) => {
             token: access_token,
         });
     } catch (error) {
+        if (error.issues) {
+            return res.status(400).json({ error: error.issues[0].message });
+        }
         res.status(400).json({ error: error.message });
     }
 };

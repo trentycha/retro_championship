@@ -15,6 +15,7 @@ const CreateTournament = () => {
     const [prizeValue, setPrizeValue] = useState("");
     const [games, setGames] = useState([]);
     const [channels, setChannels] = useState([]);
+    const [error, setError] = useState("");
     const { user } = useAuth();
     const navigate = useNavigate();
 
@@ -45,6 +46,13 @@ const CreateTournament = () => {
     }, []);
 
     const handleSubmit = async () => {
+        setError("");
+
+        if (!name || !startedAt || !endedAt || !gameId || !channelId || !prizeName || !prizeValue || !prizeDescription) {
+            setError("Veuillez remplir tous les champs.");
+            return;
+        }
+
         try {
             const prizeResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/prize`, {
                 method: "POST",
@@ -76,7 +84,7 @@ const CreateTournament = () => {
             const data = await response.json();
             navigate(`/tournament/${data.id}`);
         } catch (error) {
-            console.error(error.message);
+            setError(error.message);
         }
     };
 
@@ -102,7 +110,7 @@ const CreateTournament = () => {
                             <p className="text-[#00DEF5] ml-3">Jeu</p>
                             <select className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mt-1 w-full"
                                 value={gameId} onChange={(e) => setGameId(e.target.value)}>
-                                <option value="">Sélectionner un jeu</option>
+                                <option value="">Sélectionne un jeu</option>
                                 {games.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
                             </select>
                         </div>
@@ -129,7 +137,7 @@ const CreateTournament = () => {
                             <p className="text-[#00DEF5] ml-3">Room</p>
                             <select className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mt-1 w-full"
                                 value={channelId} onChange={(e) => setChannelId(e.target.value)}>
-                                <option value="">Sélectionner un channel</option>
+                                <option value="">Choisis une room</option>
                                 {channels.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
                             </select>
                         </div>
@@ -167,6 +175,8 @@ const CreateTournament = () => {
                         <textarea placeholder="Description du prize" rows={4} className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mt-1 w-full resize-none"
                             value={prizeDescription} onChange={(e) => setPrizeDescription(e.target.value)} />
                     </div>
+
+                    {error && <p className="text-red-500 mt-4 text-right">{error}</p>}
 
                     <div className="flex justify-end mt-8">
                         <button onClick={handleSubmit}

@@ -59,7 +59,7 @@ const Homepage = () => {
         </div>
         
         <div className="mt-10 xl:mt-20 xl:text-xl">
-          <h4 className='text-[#00DEF5] font-bold'>Prochains tournois...</h4>
+          <h2 className='text-[#00DEF5] font-bold'>Prochains tournois...</h2>
         </div>
         <div className="hidden xl:flex xl:gap-10">
           {cards.slice(0, 3).map(c => (<HomeCard key={c.id} id={c.id} status={c.tournamentStatus.label} 

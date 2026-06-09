@@ -27,6 +27,9 @@ exports.createTournament = async (req, res) => {
         );
         res.status(201).json(newTournament);
     } catch (error) {
+        if (error.issues) {
+            return res.status(400).json({ error: error.issues[0].message });
+        }
         res.status(400).json({ error: error.message });
     }
 };
@@ -39,6 +42,9 @@ exports.updateTournament = async (req, res) => {
         );
         res.status(200).json(updatedTournament);
     } catch (error) {
+        if (error.issues) {
+            return res.status(400).json({ error: error.issues[0].message });
+        }
         res.status(400).json({ error: error.message });
     }
 };
