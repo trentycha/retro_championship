@@ -52,9 +52,9 @@ const Homepage = () => {
           <img src='/images/responsive-homepage.png' alt="homepage" className="w-100 xl:hidden rounded-xl opacity-50"/>
           <h1 className="absolute top-12 left-7 xl:top-50 xl:left-15 text-[#F9FF00] font-pixeloid-bold text-lg leading-none xl:text-6xl">Tournois e-sport <br/> retrogaming</h1>
           <p className="absolute xl:hidden top-22 left-7 text-white text-sm">Inscrivez-vous et participez en illimité à des tournois
-            de retro-gaming à travers toute la France !</p>
+            de retro-gaming sur de nombreuses licences !</p>
           <p className="hidden xl:block absolute xl:top-90 xl:left-15 text-white xl:text-2xl">Inscrivez-vous et participez en illimité à des tournois <br/>
-            de retro-gaming à travers toute la France !</p>
+            de retro-gaming sur de nombreuses licences !</p>
           <img src='/images/mario-home.png' alt="mario-home" className="absolute top-32 left-55 w-35 xl:top-45 xl:left-210 xl:w-120"/>
         </div>
         
