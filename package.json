@@ -20,8 +20,8 @@
   "jest": {
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
-        "/node_modules/",
-        "<rootDir>/frontend/"
+      "/node_modules/",
+      "<rootDir>/frontend/"
     ]
   },
   "dependencies": {
