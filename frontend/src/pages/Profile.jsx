@@ -15,7 +15,7 @@ const Profile = () => {
 
         const fetchUser = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/user/${id}`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/${id}`);
                 const data = await response.json();
                 setUser(data);
                 setLoading(false);
@@ -31,7 +31,7 @@ const Profile = () => {
     const handleDelete = async (id) => {
 
         try {
-            await fetch(`http://localhost:3000/api/user/${id}`, {
+            await fetch(`${import.meta.env.VITE_API_URL}/api/user/${id}`, {
                 method: 'DELETE',
                 headers: AuthService.isAuthHeaders()
             });
