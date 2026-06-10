@@ -144,7 +144,6 @@ const Homepage = () => {
           <img src='/images/pepsi.png' alt="gentle-mates" className="w-50 opacity-50 flex-1"/>
         </div>
         <div className="relative mb-20">
-          {/* <img src='/images/tetris-two.png' alt="tetris-block" className="absolute left-250 w-50"/> */}
           <img src='/images/tetris-one.png' alt="tetris-block" className=" w-50 xl:absolute xl:w-80"/>
         </div>
 
