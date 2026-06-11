@@ -8,7 +8,7 @@ const TournamentsCard = (props) => {
     <div onClick={() => navigate(`/tournament/${props.id}`)} className="bg-[#343434] mx-5 xl:mx-0 rounded-2xl shadow-lg shadow-black/30 xl:flex xl:items-start xl:mt-10 xl:mb-10 hover:shadow-xl hover:scale-102 cursor-pointer">
 
         <div className="xl:flex xl:justify-end">
-            <img src={props.image} alt="click" className="w-full rounded-t-xl xl:rounded-t-none xl:w-120 xl:rounded-l-xl"/>
+            <img src={props.image || '/images/pacman-game.jpg'} alt="click" className="w-full rounded-t-xl xl:rounded-t-none xl:w-120 xl:rounded-l-xl"/>
         </div>
 
         <div className="mb-5 xl:mb-0 py-6 px-8 xl:py-12 xl:px-14">
