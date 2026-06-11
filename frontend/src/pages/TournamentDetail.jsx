@@ -119,10 +119,10 @@ const TournamentDetail = () => {
             </div>
             
             <div className="w-px bg-[#4b4b4b] self-stretch"></div>
-                <div className="pl-5 pr-40">
+                <div className="pl-5 pr-20">
                     
                     <p className="text-white">Trophée</p>
-                    <p className="text-[#F9FF00] font-pixeloid-bold text-xl">{tournament.prize?.value}€</p>
+                    <p className="text-[#F9FF00] font-pixeloid-bold text-xl">{tournament.prize?.name}</p>
                     <p className="text-white pt-5">Gagnant</p>
                     {tournament.winner ? <p className="text-[#F9FF00] font-pixeloid-bold text-xl">{tournament.winner?.username}</p>
                     : <p className="text-[#F9FF00] font-pixeloid-bold text-xl">Indéfini</p>
