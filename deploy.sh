@@ -1,6 +1,7 @@
 #!/bin/bash
 cd /var/www/retro_championship
-git pull origin main
+git fetch origin main
+git reset --hard origin/main
 npm install
 npx prisma generate
 cd frontend
