@@ -131,8 +131,8 @@ const TournamentDetail = () => {
                 </div>
             <div className="w-px bg-[#4b4b4b] self-stretch"></div>
                 <div>
-                    <button onClick={() => setPopUp(true)} disabled={!isAuthenticated}
-                        className={isAuthenticated ? "bg-[#c0c700] hover:bg-white hover:text-[#c0c700] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 cursor-pointer"
+                    <button onClick={() => setPopUp(true)} disabled={!isAuthenticated || tournament.tournamentStatus?.label === "En cours"}
+                        className={isAuthenticated && tournament.tournamentStatus?.label !== "En cours" ? "bg-[#c0c700] hover:bg-white hover:text-[#c0c700] px-7 py-4 rounded-lg text-white text-lg font-semibold shadow-lg shadow-black/30 mt-6 cursor-pointer"
                         : "bg-[#5a5a00] px-7 py-4 rounded-lg text-gray-400 text-lg font-semibold shadow-lg shadow-black/30 mt-6 cursor-not-allowed opacity-50"}>
                         Je m'inscris !
                     </button>
