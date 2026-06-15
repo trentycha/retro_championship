@@ -4,7 +4,9 @@ const signupSchema = z.object({
     mail: z.string().email("L'adresse email n'est pas valide"),
     password: z
         .string()
-        .min(4, 'Le mot de passe doit contenir au moins 4 caractères'),
+        .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
+        .regex(/[A-Z]/, 'Le mot de passe doit contenir au moins une majuscule')
+        .regex(/[0-9]/, 'Le mot de passe doit contenir au moins un chiffre'),
     username: z
         .string()
         .min(3, "Le nom d'utilisateur doit contenir au moins 3 caractères"),

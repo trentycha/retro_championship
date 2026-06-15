@@ -17,11 +17,18 @@ const Register = () => {
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
+
+    if (password.length < 8 || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
+        setError("Le mot de passe doit contenir au moins 8 caractères, une majuscule et un chiffre.");
+        return;
+    }
+
       if (password !== confirmPassword) {
         setError("Les mots de passe ne correspondent pas.");
         setLoading(false);
