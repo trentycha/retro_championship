@@ -114,7 +114,7 @@ const Register = () => {
 
         <div className="flex items-center justify-center gap-2 mt-5">
           <span className="text-white text-lg">Déjà un compte ?</span>
-          <button onClick={() => navigate('/login')} className="text-[#00DEF5] hover:underline text-lg cursor-pointer">Connectez-vous !</button>
+          <button onClick={() => navigate('/login')} className="text-[#00DEF5] hover:underline text-lg cursor-pointer">Connecte-toi !</button>
         </div>
 
       </div>

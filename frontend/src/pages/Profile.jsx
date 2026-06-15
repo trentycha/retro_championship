@@ -55,7 +55,7 @@ const Profile = () => {
         <div className="px-40 pb-20">
 
             {isOwner ?
-                <h2 className="text-[#F9FF00] font-pixeloid-bold text-4xl">Salut, {user.username}</h2>
+                <h2 className="text-[#F9FF00] font-pixeloid-bold text-4xl">Salut, {user.username} !</h2>
             : <h2 className="text-[#F9FF00] font-pixeloid-bold text-4xl">{user.username}</h2>}
 
             <div className="flex gap-6">
