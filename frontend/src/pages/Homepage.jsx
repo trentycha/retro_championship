@@ -21,8 +21,6 @@ const Homepage = () => {
     setImage(c => (c - 1 + carousel.length) % carousel.length)
   }
 
-
-
   useEffect(() => {
     const fetchThreeCards = async () => {
       try {
@@ -52,10 +50,10 @@ const Homepage = () => {
           <img src='/images/responsive-homepage.png' alt="homepage" className="w-100 xl:hidden rounded-xl opacity-50"/>
           <h1 className="absolute top-12 left-7 xl:top-50 xl:left-15 text-[#F9FF00] font-pixeloid-bold text-lg leading-none xl:text-6xl">Tournois e-sport <br/> retrogaming</h1>
           <p className="absolute xl:hidden top-22 left-7 text-white text-sm">Inscrivez-vous et participez en illimité à des tournois
-            de retro-gaming sur de nombreuses licences différentes !</p>
+            de retro-gaming sur de nombreuses licences !</p>
           <p className="hidden xl:block absolute xl:top-90 xl:left-15 text-white xl:text-2xl">Inscrivez-vous et participez en illimité à des tournois <br/>
             de retro-gaming sur de nombreuses licences !</p>
-          <img src='/images/mario-home.png' alt="mario-home" className="absolute top-32 left-58 w-30 xl:top-45 xl:left-220 xl:w-100"/>
+          <img src='/images/mario-home.png' alt="mario-home" className="absolute top-32 left-58 w-30 xl:top-45 xl:left-220 xl:w-110"/>
         </div>
         
         <div className="mt-10 xl:mt-20 xl:text-xl">
@@ -144,7 +142,6 @@ const Homepage = () => {
           <img src='/images/pepsi.png' alt="gentle-mates" className="w-50 opacity-50 flex-1"/>
         </div>
         <div className="relative mb-20">
-          {/* <img src='/images/tetris-two.png' alt="tetris-block" className="absolute left-250 w-50"/> */}
           <img src='/images/tetris-one.png' alt="tetris-block" className=" w-50 xl:absolute xl:w-80"/>
         </div>
 
