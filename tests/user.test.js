@@ -41,7 +41,7 @@ describe('userService.signup', () => {
 
         const result = await userService.signup({
             mail: 'test@test.com',
-            password: '12345678',
+            password: 'Test1234!',
             username: 'testuser',
             birthday: '1997-06-19',
             city: 'Paris',
@@ -61,7 +61,7 @@ describe('userService.signup', () => {
         await expect(
             userService.signup({
                 mail: 'test@test.com',
-                password: '12345678',
+                password: 'Test1234!',
                 username: 'testuser',
                 birthday: '1997-06-19',
                 city: 'Paris',
@@ -78,7 +78,7 @@ describe('userService.signup', () => {
         await expect(
             userService.signup({
                 mail: 'test@test.com',
-                password: '12345678',
+                password: 'Test1234!',
                 username: 'testuser',
                 birthday: '1997-06-19',
                 city: 'Paris',

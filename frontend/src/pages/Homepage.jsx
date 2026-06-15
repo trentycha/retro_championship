@@ -55,7 +55,7 @@ const Homepage = () => {
             de retro-gaming sur de nombreuses licences !</p>
           <p className="hidden xl:block absolute xl:top-90 xl:left-15 text-white xl:text-2xl">Inscrivez-vous et participez en illimité à des tournois <br/>
             de retro-gaming sur de nombreuses licences !</p>
-          <img src='/images/mario-home.png' alt="mario-home" className="absolute top-32 left-55 w-35 xl:top-45 xl:left-210 xl:w-120"/>
+          <img src='/images/mario-home.png' alt="mario-home" className="absolute top-32 left-58 w-30 xl:top-45 xl:left-220 xl:w-100"/>
         </div>
         
         <div className="mt-10 xl:mt-20 xl:text-xl">
