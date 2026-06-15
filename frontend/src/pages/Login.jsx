@@ -40,7 +40,7 @@ const Login = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="px-10 py-12 xl:flex-1 xl:pl-15 xl:px-0 xl:py-10">
-                <h2 className="text-[#F9FF00] font-pixeloid-bold text-lg xl:text-3xl xl:mt-5 xl:mb-10">Connectez-vous !</h2>
+                <h2 className="text-[#F9FF00] font-pixeloid-bold text-lg xl:text-3xl xl:mt-5 xl:mb-10">Connecte-toi !</h2>
                 <p className='text-[#00DEF5] pt-4 xl:pt-0 xl:ml-3'>Email</p>
                 <input placeholder="Votre email" className='bg-[#4F4F4F] text-white px-4 py-3 pr-12 xl:pr-60 rounded-lg mb-4 mt-1'
                 value = {mail}

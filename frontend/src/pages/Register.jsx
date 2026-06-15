@@ -6,6 +6,7 @@ import Loading from './Loading.jsx'
 const Register = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUsername] = useState("");
   const [birthday, setBirthday] = useState("");
   const [city, setCity] = useState("");
@@ -21,6 +22,11 @@ const Register = () => {
     setError("");
 
     try {
+      if (password !== confirmPassword) {
+        setError("Les mots de passe ne correspondent pas.");
+        setLoading(false);
+        return;
+      }
       await register({ mail, password, username, birthday, city, userStatus });
       navigate('/');
     } catch (error) {
@@ -40,7 +46,7 @@ const Register = () => {
         <div className="bg-[#343434] rounded-2xl shadow-xl shadow-black/30 flex items-start px-7 py-7">
 
           <form onSubmit={handleSubmit} className="px-10 py-12 w-full">
-            <h2 className="text-[#F9FF00] font-pixeloid-bold text-lg xl:text-3xl">Créez votre compte !</h2>
+            <h2 className="text-[#F9FF00] font-pixeloid-bold text-lg xl:text-3xl">Crée ton compte !</h2>
 
             <div className="flex gap-10 mt-10">
 
@@ -55,22 +61,10 @@ const Register = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)} />
 
-                <p className="text-[#00DEF5] ml-3">Pseudo</p>
-                <input placeholder="Votre pseudo" className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mb-4 mt-1 w-full"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)} />
-              </div>
-
-              <div className="flex flex-col flex-1">
-                <p className="text-[#00DEF5] ml-3">Date de naissance</p>
-                <input type="date" placeholder="Votre date de naissance" className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mb-4 mt-1 w-full"
-                  value={birthday}
-                  onChange={(e) => setBirthday(e.target.value)} />
-
-                <p className="text-[#00DEF5] ml-3">Ville</p>
-                <input placeholder="Votre ville" className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mb-4 mt-1 w-full"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)} />
+                <p className="text-[#00DEF5] ml-3">Confirmer le mot de passe</p>
+                <input type="password" placeholder="Confirmez votre mot de passe" className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mb-4 mt-1 w-full"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)} />
 
                 <p className="text-[#00DEF5] ml-3">Rôle</p>
                 <select className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mb-4 mt-1 w-full"
@@ -80,6 +74,24 @@ const Register = () => {
                   <option value="admin">Admin</option>
                   <option value="super-admin">Super-admin</option>
                 </select>
+
+              </div>
+
+              <div className="flex flex-col flex-1">
+                <p className="text-[#00DEF5] ml-3">Pseudo</p>
+                <input placeholder="Votre pseudo" className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mb-4 mt-1 w-full"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)} />
+
+                <p className="text-[#00DEF5] ml-3">Date de naissance</p>
+                <input type="date" placeholder="Votre date de naissance" className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mb-4 mt-1 w-full"
+                  value={birthday}
+                  onChange={(e) => setBirthday(e.target.value)} />
+
+                <p className="text-[#00DEF5] ml-3">Ville</p>
+                <input placeholder="Votre ville" className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mb-4 mt-1 w-full"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)} />
 
                 {error && <p className="text-red-500">{error}</p>}
 
