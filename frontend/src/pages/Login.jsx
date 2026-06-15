@@ -57,7 +57,7 @@ const Login = () => {
 
         <div className="flex items-center justify-center gap-2 mt-5">
           <span className="text-white text-lg">Vous n'avez pas de compte ?</span>
-          <button onClick={(() => navigate('/register'))} className="text-[#00DEF5] hover:underline text-lg cursor-pointer">Inscrivez-vous !</button>
+          <button onClick={(() => navigate('/register'))} className="text-[#00DEF5] hover:underline text-lg cursor-pointer">Inscris-toi !</button>
         </div>
 
       </div>
