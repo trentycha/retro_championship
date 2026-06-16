@@ -11,6 +11,7 @@ import Error404 from './pages/Error404.jsx'
 import Register from './pages/Register.jsx'
 import { useAuth } from './hooks/useAuth';
 import CreateTournament from './pages/CreateTournament.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 function App() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <>
+      <ScrollToTop />
       {!hide && <Header />}
       <Routes>
         <Route path='/' element={<Homepage />} />
