@@ -167,9 +167,11 @@ const TournamentDetail = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-5 px-5">
-                {rounds.find(r => r.roundId === activeRound)?.matches.map((match) => (
-                    <MatchCard key={match.id} match={match} round={rounds.find(r => r.roundId === activeRound)?.label} />
-                ))}
+                {rounds.length === 0 ? <p className="text-white">Aucun match pour le moment</p> :
+                    rounds.find(r => r.roundId === activeRound)?.matches.map((match) => (
+                        <MatchCard key={match.id} match={match} round={rounds.find(r => r.roundId === activeRound)?.label} />
+                    ))
+                }
             </div>
         </div>
         
