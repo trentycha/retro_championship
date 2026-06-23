@@ -162,7 +162,7 @@ retro_championship/
 ├── validators/         # Schémas de validation Zod
 ├── prisma/             # Schéma et migrations Prisma
 ├── tests/              # Tests unitaires Jest
-├── webhook.js          # Serveur webhook GitHub
+├── webhook.js          # Serveur webhook Github
 ├── deploy.sh           # Script de déploiement automatique
 ├── frontend/           # Application React
 │   ├── src/
