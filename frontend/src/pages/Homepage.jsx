@@ -69,7 +69,7 @@ const Homepage = () => {
         </div>
 
         <div>
-          <img src='/images/separation.png' alt="pacman-ghost-separation" className="w-60 mx-auto py-10 xl:w-100 xl:my-10"/>
+          <img src='/images/separation.png' alt="Décorateur et séparateur de section : 4 monstres de Pacman" className="w-60 mx-auto py-10 xl:w-100 xl:my-10"/>
         </div>
 
         <div className="xl:hidden">

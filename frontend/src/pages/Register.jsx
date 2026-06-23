@@ -73,15 +73,6 @@ const Register = () => {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)} />
 
-                <p className="text-[#00DEF5] ml-3">Rôle</p>
-                <select className="bg-[#4F4F4F] text-white px-4 py-3 rounded-lg mb-4 mt-1 w-full"
-                  value={userStatus}
-                  onChange={(e) => setUserStatus(e.target.value)}>
-                  <option value="player">Player</option>
-                  <option value="admin">Admin</option>
-                  <option value="super-admin">Super-admin</option>
-                </select>
-
               </div>
 
               <div className="flex flex-col flex-1">
